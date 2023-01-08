@@ -119,3 +119,6 @@ cd fabric-samples/test-network
 
 
 # 实践
+
+有报错，待检查
+
