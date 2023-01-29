@@ -1,17 +1,17 @@
 version: '2.1' # 指定 compose 文件的版本
 
-volumes:
+volumes:	# 配置命名的数据卷(volume).如果要在多个容器之间共享数据卷，就必须在顶级的 volumes 节点中定义这个数据卷
   orderer.qq.com:
   peer0.taobao.com:
   peer1.taobao.com:
   peer0.jd.com:
   peer1.jd.com:
 
-networks:
+networks:	# 对容器进行网络上的隔离
   fabric_network:
     name: fabric_network
 
-services: # 定义所有的 service 信息, services 下面的第一级别的 key 即是一个 service 的名称
+services: # 定义所有的 service 信息(容器镜像), services 下面的第一级别的 key 即是一个 service 的名称
   # 排序服务节点
   orderer.qq.com:
     container_name: orderer.qq.com  # 指定容器的名称 (等同于 docker run --name 的作用)
@@ -49,7 +49,7 @@ services: # 定义所有的 service 信息, services 下面的第一级别的 ke
     volumes:
       - ./crypto-config/peerOrganizations/taobao.com/peers/peer0.taobao.com:/etc/hyperledger/peer
       - peer0.taobao.com:/var/hyperledger/production
-    depends_on:
+    depends_on:		# 控制容器的启动顺序
       - orderer.qq.com
 
   #  Taobao 组织 peer1 节点
@@ -68,7 +68,7 @@ services: # 定义所有的 service 信息, services 下面的第一级别的 ke
     volumes:
       - ./crypto-config/peerOrganizations/taobao.com/peers/peer1.taobao.com:/etc/hyperledger/peer
       - peer1.taobao.com:/var/hyperledger/production
-    depends_on:
+    depends_on:		# 控制容器的启动顺序
       - orderer.qq.com
 
   #  JD 组织 peer0 节点
@@ -87,7 +87,7 @@ services: # 定义所有的 service 信息, services 下面的第一级别的 ke
     volumes:
       - ./crypto-config/peerOrganizations/jd.com/peers/peer0.jd.com:/etc/hyperledger/peer
       - peer0.jd.com:/var/hyperledger/production
-    depends_on:
+    depends_on:		# 控制容器的启动顺序
       - orderer.qq.com
 
   #  JD 组织 peer1 节点
