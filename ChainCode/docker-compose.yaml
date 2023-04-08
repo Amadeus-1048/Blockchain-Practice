@@ -16,6 +16,7 @@ services: # 定义所有的 service 信息(容器镜像), services 下面的第�
   orderer.qq.com:
     container_name: orderer.qq.com  # 指定容器的名称 (等同于 docker run --name 的作用)
     image: hyperledger/fabric-orderer:1.4.12 # 指定 docker 镜像, 可以是远程仓库镜像、本地镜像
+    #platform: linux/arm64/v8
     environment: # 设置环境变量， environment 的值可以覆盖 env_file 的值 (等同于 docker run --env 的作用)
       - GODEBUG=netdns=go
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
@@ -39,6 +40,7 @@ services: # 定义所有的 service 信息(容器镜像), services 下面的第�
       file: docker-compose-base.yaml
       service: peer-base
     container_name: peer0.taobao.com
+    #platform: linux/arm64/v8
     environment:
       - CORE_PEER_ID=peer0.taobao.com
       - CORE_PEER_LOCALMSPID=TaobaoMSP
@@ -58,6 +60,7 @@ services: # 定义所有的 service 信息(容器镜像), services 下面的第�
       file: docker-compose-base.yaml
       service: peer-base
     container_name: peer1.taobao.com
+    #platform: linux/arm64/v8
     environment:
       - CORE_PEER_ID=peer1.taobao.com
       - CORE_PEER_LOCALMSPID=TaobaoMSP
@@ -77,6 +80,7 @@ services: # 定义所有的 service 信息(容器镜像), services 下面的第�
       file: docker-compose-base.yaml
       service: peer-base
     container_name: peer0.jd.com
+    #platform: linux/arm64/v8
     environment:
       - CORE_PEER_ID=peer0.jd.com
       - CORE_PEER_LOCALMSPID=JDMSP
@@ -96,6 +100,7 @@ services: # 定义所有的 service 信息(容器镜像), services 下面的第�
       file: docker-compose-base.yaml
       service: peer-base
     container_name: peer1.jd.com
+    #platform: linux/arm64/v8
     environment:
       - CORE_PEER_ID=peer1.jd.com
       - CORE_PEER_LOCALMSPID=JDMSP
@@ -113,6 +118,7 @@ services: # 定义所有的 service 信息(容器镜像), services 下面的第�
   cli:
     container_name: cli
     image: hyperledger/fabric-tools:1.4.12
+    #platform: linux/arm64/v8
     tty: true
     environment:
       # go 环境设置
