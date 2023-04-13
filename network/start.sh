@@ -105,8 +105,8 @@ echo "使用变量TaobaoPeer0Cli指定在peer0.taobao.com节点上执行调用�
 docker exec cli bash -c "$TaobaoPeer0Cli peer chaincode invoke -C appchannel -n fabric-MIMS -c '{\"Args\":[\"hello\"]}'"
 
 if docker exec cli bash -c "$JDPeer0Cli peer chaincode invoke -C appchannel -n fabric-MIMS -c '{\"Args\":[\"hello\"]}'" 2>&1 | grep "Chaincode invoke successful"; then
-  echo "【恭喜您！】 network 部署成功，后续如需暂时停止运行，可以执行 docker-compose stop 命令（不会丢失数据）。"
+  echo "[Successful] network 部署成功。后续如需暂时停止运行，可以执行 docker-compose stop 命令（数据已持久化保存在Docker Volume中，不会丢失数据）。"
   exit 0
 fi
 
-echo "【警告】network 未部署成功，请检查每一个步骤，定位具体问题。"
+echo "[Failed] network 未部署成功，请根据log信息定位具体问题并解决。"

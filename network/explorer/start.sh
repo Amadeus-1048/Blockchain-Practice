@@ -9,5 +9,6 @@ sed -i "" "s/priv_sk/$priv_sk_path/" ./connection-profile/network.json
 docker-compose down -v
 docker-compose up -d
 
-echo -e "\n\n\n"
+echo -e "\n"
 echo "已启动区块链浏览器，访问 http://localhost:8080/#/，用户名 admin，密码 123456"
+echo -e "\n"
