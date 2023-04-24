@@ -22,7 +22,7 @@ var (
 func Init() {
 	var err error
 	// 通过配置文件初始化SDK
-	sdk, err = fabsdk.New(config.FromFile(configPath))
+	sdk, err = fabsdk.New(config.FromFile(configPath)) // 创建一个 FabricSDK 实例
 	if err != nil {
 		panic(err)
 	}

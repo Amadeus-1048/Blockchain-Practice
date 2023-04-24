@@ -13,18 +13,20 @@ import (
 	"github.com/robfig/cron/v3"
 )
 
-const spec = "0 0 0 * * ?" // 每天0点执行
+const spec = "0 0 0 * * ?" // 基于 Quartz Cron 表达式的时间规则，表示每天 0 点执行一次
 //const spec = "*/10 * * * * ?" //10秒执行一次，用于测试
 
+// Init 初始化定时任务
 func Init() {
+	// 创建一个支持到秒级别的定时任务管理器  使用 cron.New 方法进行初始化
 	c := cron.New(cron.WithSeconds()) //支持到秒级别
 	_, err := c.AddFunc(spec, GoRun)
 	if err != nil {
 		log.Printf("定时任务开启失败 %s", err)
 	}
-	c.Start()
+	c.Start() // 启动定时任务管理器
 	log.Printf("定时任务已开启")
-	select {}
+	select {} // 让程序保持运行状态，以便可以一直执行定时任务（阻塞进程）
 }
 
 func GoRun() {
