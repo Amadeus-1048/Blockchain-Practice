@@ -38,7 +38,7 @@ module.exports = {
     },
     proxy: {
           '/api': {
-              target: "http://127.0.0.1:8888", //本地开发时使用，用于连接后端接口
+              target: "http://localhost:8888/", //本地开发时使用，用于连接后端接口
               changeOrigin: true,
           }
     }

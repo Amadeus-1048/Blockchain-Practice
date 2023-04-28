@@ -14,7 +14,7 @@ import (
 // objectType：对象类型，用于创建复合主键时区分不同类型的对象。
 // keys：用于创建复合主键的键值列表。
 // 该函数可以在智能合约中的任何位置调用，用于将任意类型的数据写入区块链账本中
-func WriteLedger(obj any, stub shim.ChaincodeStubInterface, objectType string, keys []string) error {
+func WriteLedger(obj interface{}, stub shim.ChaincodeStubInterface, objectType string, keys []string) error {
 	// 使用 stub.CreateCompositeKey 方法根据 objectType 和 keys 创建一个复合主键
 	var key string
 	if val, err := stub.CreateCompositeKey(objectType, keys); err != nil {
