@@ -8,14 +8,14 @@ import (
 
 // 配置信息
 var (
-	sdk           *fabsdk.FabricSDK                              // Fabric SDK
-	configPath    = "config.yaml"                                // 配置文件路径
+	sdk *fabsdk.FabricSDK // Fabric SDK
+	//configPath    = "config.yaml"                                // 配置文件路径
 	channelName   = "appchannel"                                 // 通道名称
 	user          = "Admin"                                      // 用户
 	chainCodeName = "fabric-mims"                                // 链码名称
 	endpoints     = []string{"peer0.jd.com", "peer0.taobao.com"} // 要发送交易的节点
 
-	//configPath = "./config-local-dev.yaml" // 配置文件路径(本地开发时使用)  工作目录是main.go所在的目录，所以不用加./..
+	configPath = "./config-local-dev.yaml" // 配置文件路径(本地开发时使用)  工作目录是main.go所在的目录，所以不用加./..
 )
 
 // Init 初始化

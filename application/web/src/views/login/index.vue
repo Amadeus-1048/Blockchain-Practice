@@ -3,7 +3,7 @@
     <el-form ref="loginForm" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">基于区块链的房地产交易系统</h3>
+        <h3 class="title">基于区块链的医疗信息管理系统</h3>
       </div>
       <el-select v-model="value" placeholder="请选择用户角色" class="login-select" @change="selectGet">
         <el-option
@@ -20,7 +20,7 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">立即进入</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">tips: 选择不同用户角色模拟交易</span>
+        <span style="margin-right:20px;">tips: 选择不同的用户角色体验系统</span>
       </div>
 
     </el-form>
