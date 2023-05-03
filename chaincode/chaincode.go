@@ -40,6 +40,21 @@ func (t *BlockChainMedicalInfoManageSystem) Init(stub shim.ChaincodeStubInterfac
 			return shim.Error(fmt.Sprintf("%s", err))
 		}
 	}
+
+	var accountV2Ids = [6]string{"1feceb66ffc1", "2b86b273ff31", "34735e3a261e", "4e17408561be", "5b227771d4dd", "6f2d121de37b"}
+	var userNameV2s = [6]string{"医生", "①号病人", "②号病人", "③号病人", "药店", "保险机构"}
+	//初始化账号数据
+	for i, val := range accountV2Ids {
+		account := &model.AccountV2{
+			AccountId:   val,
+			AccountName: userNameV2s[i],
+		}
+		// 写入账本
+		if err := utils.WriteLedger(account, stub, model.AccountV2Key, []string{val}); err != nil {
+			return shim.Error(fmt.Sprintf("%s", err))
+		}
+	}
+
 	return shim.Success(nil)
 }
 
@@ -75,6 +90,10 @@ func (t *BlockChainMedicalInfoManageSystem) Invoke(stub shim.ChaincodeStubInterf
 		return api.QueryDonatingListByGrantee(stub, args)
 	case "updateDonating":
 		return api.UpdateDonating(stub, args)
+	// api v2
+	case "queryAccountV2List":
+		return api.QueryAccountV2List(stub, args)
+
 	default:
 		return shim.Error(fmt.Sprintf("没有该功能: %s", funcName))
 	}

@@ -2,6 +2,7 @@ package routers
 
 import (
 	v1 "application/api/v1"
+	v2 "application/api/v2"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,6 +25,11 @@ func InitRouter() *gin.Engine {
 		apiV1.POST("/queryDonatingList", v1.QueryDonatingList)
 		apiV1.POST("/queryDonatingListByGrantee", v1.QueryDonatingListByGrantee)
 		apiV1.POST("/updateDonating", v1.UpdateDonating)
+	}
+	apiV2 := r.Group("/api/v2")
+	{
+		apiV2.GET("/hello", v2.Hello)
+		apiV2.POST("/queryAccountV2List", v2.QueryAccountV2List)
 	}
 	return r
 }
