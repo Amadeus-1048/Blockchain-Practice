@@ -91,6 +91,8 @@ const (
 	AccountV2Key    = "account-v2-key"
 	PrescriptionKey = "prescription-key"
 	PatientKey      = "patient-key"
+	InsuranceKey    = "insurance-key"
+	DrugKey         = "drug-key"
 )
 
 // --------------------------------------------------------------------
@@ -124,7 +126,7 @@ type Doctor struct {
 // Prescription 医疗处方
 type Prescription struct {
 	ID        string `json:"id"`        // 医疗处方ID
-	Patient   string `json:"patient"`   // 患者基本信息
+	Patient   string `json:"patient"`   // 患者ID
 	Diagnosis string `json:"diagnosis"` // 诊断结果
 	Drug      []Drug `json:"drug"`      // 药品列表及用量
 	Doctor    string `json:"doctor"`    // 开方医师 AccountV2Id
@@ -147,8 +149,18 @@ type Drug struct {
 	Amount string `json:"amount"` // 药品数量
 }
 
-// Pharmacy 药店
-type Pharmacy struct {
+// DrugOrder 药品订单
+type DrugOrder struct {
+	ID           string `json:"id"`           // 订单ID
+	Name         string `json:"Name"`         // 药品名
+	Amount       string `json:"amount"`       // 药品数量
+	Prescription string `json:"prescription"` // 处方ID
+	Patient      string `json:"patient"`      // 患者ID
+	DrugStore    string `json:"drug_store"`   // 药店id
+}
+
+// DrugStore 药店
+type DrugStore struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
 }
@@ -157,6 +169,14 @@ type Pharmacy struct {
 type Insurance struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
+}
+
+// InsuranceCover 保险报销订单
+type InsuranceCover struct {
+	ID           string `json:"id"`           // 订单ID
+	Prescription string `json:"prescription"` // 处方ID
+	Patient      string `json:"patient"`      // 患者ID
+	Status       string `json:"status"`       // 订单状态
 }
 
 // InsuranceStatusConstant 保险状态

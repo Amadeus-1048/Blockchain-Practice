@@ -97,6 +97,14 @@ func (t *BlockChainMedicalInfoManageSystem) Invoke(stub shim.ChaincodeStubInterf
 		return api.CreatePrescription(stub, args)
 	case "queryPrescription":
 		return api.QueryPrescription(stub, args)
+	case "createInsuranceCover":
+		return api.CreateInsuranceCover(stub, args)
+	case "queryInsuranceCover":
+		return api.QueryInsuranceCover(stub, args)
+	case "createDrugOrder":
+		return api.CreateDrugOrder(stub, args)
+	case "queryDrugOrder":
+		return api.QueryDrugOrder(stub, args)
 	default:
 		return shim.Error(fmt.Sprintf("没有该功能: %s", funcName))
 	}

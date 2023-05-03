@@ -73,12 +73,12 @@ func CreatePrescription(stub shim.ChaincodeStubInterface, args []string) pb.Resp
 		return shim.Error(fmt.Sprintf("%s", err))
 	}
 	//将成功创建的信息返回
-	realEstateByte, err := json.Marshal(prescription)
+	prescriptionByte, err := json.Marshal(prescription)
 	if err != nil {
 		return shim.Error(fmt.Sprintf("序列化成功创建的信息出错: %s", err))
 	}
 	// 成功返回
-	return shim.Success(realEstateByte)
+	return shim.Success(prescriptionByte)
 }
 
 // QueryPrescription 查询处方(可查询所有，也可根据所有人查询名下处方)
