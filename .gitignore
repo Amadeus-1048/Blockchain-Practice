@@ -17,4 +17,4 @@
 .DS_Store
 */.DS_Store
 /.idea/
-./application/server/db/config.yaml
+/application/server/db/config.yaml
