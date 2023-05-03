@@ -90,6 +90,7 @@ const (
 
 	AccountV2Key    = "account-v2-key"
 	PrescriptionKey = "prescription-key"
+	PatientKey      = "patient-key"
 )
 
 // --------------------------------------------------------------------

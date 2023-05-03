@@ -81,7 +81,7 @@ func CreatePrescription(stub shim.ChaincodeStubInterface, args []string) pb.Resp
 	return shim.Success(realEstateByte)
 }
 
-// QueryPrescription 查询房地产(可查询所有，也可根据所有人查询名下房产)
+// QueryPrescription 查询处方(可查询所有，也可根据所有人查询名下处方)
 func QueryPrescription(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var prescriptionList []model.Prescription
 	results, err := utils.GetStateByPartialCompositeKeys2(stub, model.PrescriptionKey, args)
@@ -103,4 +103,28 @@ func QueryPrescription(stub shim.ChaincodeStubInterface, args []string) pb.Respo
 		return shim.Error(fmt.Sprintf("QueryPrescription-序列化出错: %s", err))
 	}
 	return shim.Success(prescriptionByte)
+}
+
+// QueryPatient 查询患者
+func QueryPatient(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	var patientList []model.Patient
+	results, err := utils.GetStateByPartialCompositeKeys2(stub, model.PatientKey, args)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("%s", err))
+	}
+	for _, v := range results {
+		if v != nil {
+			var p model.Patient
+			err := json.Unmarshal(v, &p)
+			if err != nil {
+				return shim.Error(fmt.Sprintf("QueryPatient-反序列化出错: %s", err))
+			}
+			patientList = append(patientList, p)
+		}
+	}
+	patientByte, err := json.Marshal(patientList)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("QueryPatient-序列化出错: %s", err))
+	}
+	return shim.Success(patientByte)
 }
