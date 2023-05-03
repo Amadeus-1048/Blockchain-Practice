@@ -93,7 +93,10 @@ func (t *BlockChainMedicalInfoManageSystem) Invoke(stub shim.ChaincodeStubInterf
 	// api v2
 	case "queryAccountV2List":
 		return api.QueryAccountV2List(stub, args)
-
+	case "createPrescription":
+		return api.CreatePrescription(stub, args)
+	case "queryPrescription":
+		return api.QueryPrescription(stub, args)
 	default:
 		return shim.Error(fmt.Sprintf("没有该功能: %s", funcName))
 	}

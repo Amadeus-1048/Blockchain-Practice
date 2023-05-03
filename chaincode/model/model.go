@@ -88,7 +88,8 @@ const (
 	DonatingKey        = "donating-key"
 	DonatingGranteeKey = "donating-grantee-key"
 
-	AccountV2Key = "account-v2-key"
+	AccountV2Key    = "account-v2-key"
+	PrescriptionKey = "prescription-key"
 )
 
 // --------------------------------------------------------------------
@@ -121,13 +122,13 @@ type Doctor struct {
 
 // Prescription 医疗处方
 type Prescription struct {
-	ID        string  `json:"id"`        // 医疗处方ID
-	Patient   Patient `json:"patient"`   // 患者基本信息
-	Diagnosis string  `json:"diagnosis"` // 诊断结果
-	Drug      []Drug  `json:"drug"`      // 药品列表及用量
-	Doctor    string  `json:"doctor"`    // 开方医师 AccountV2Id
-	Hospital  string  `json:"hospital"`  // 医院 ID
-	Comment   string  `json:"comment"`   // 备注
+	ID        string `json:"id"`        // 医疗处方ID
+	Patient   string `json:"patient"`   // 患者基本信息
+	Diagnosis string `json:"diagnosis"` // 诊断结果
+	Drug      []Drug `json:"drug"`      // 药品列表及用量
+	Doctor    string `json:"doctor"`    // 开方医师 AccountV2Id
+	Hospital  string `json:"hospital"`  // 医院 ID
+	Comment   string `json:"comment"`   // 备注
 }
 
 // Patient 患者
@@ -140,10 +141,9 @@ type Patient struct {
 
 // Drug 药品
 type Drug struct {
-	ID      string  `json:"id"`
-	Name    string  `json:"Name"`    // 药品名
-	Amount  float64 `json:"amount"`  // 药品数量
-	Comment string  `json:"comment"` // 备注
+	//ID      string `json:"id"`
+	Name   string `json:"Name"`   // 药品名
+	Amount string `json:"amount"` // 药品数量
 }
 
 // Pharmacy 药店
