@@ -72,7 +72,7 @@ func QueryDrugOrderList(c *gin.Context) {
 		bodyBytes = append(bodyBytes, []byte(body.Patient))
 	}
 	//调用智能合约
-	resp, err := bc.ChannelQuery("queryDrugOrderList", bodyBytes)
+	resp, err := bc.ChannelQuery("queryDrugOrder", bodyBytes)
 	if err != nil {
 		appG.Response(http.StatusInternalServerError, "失败", err.Error())
 		return

@@ -51,7 +51,7 @@ export const constantRoutes = [{
     name: 'Realestate',
     component: () => import('@/views/realestate/list/index'),
     meta: {
-      title: '房产信息',
+      title: '主页',
       icon: 'realestate'
     }
   }]
@@ -59,8 +59,9 @@ export const constantRoutes = [{
 ]
 
 /**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
+ * asyncRoutes 异步路由
+ * the routes that need to be dynamically loaded based on user roles   异步路由是根据用户角色动态加载的路由。
+ * 每个路由对象包括路径（path）、组件（component）、重定向（redirect）、路由名称（name）、子路由（children）等元素
  */
 export const asyncRoutes = [
   {
@@ -143,21 +144,145 @@ export const asyncRoutes = [
     }
     ]
   },
+  // {
+  //   path: '/addRealestate',
+  //   component: Layout,
+  //   meta: {
+  //     roles: ['admin']
+  //   },
+  //   children: [{
+  //     path: '/addRealestate',
+  //     name: 'AddRealestate',
+  //     component: () => import('@/views/realestate/add/index'),
+  //     meta: {
+  //       title: '新增房产',
+  //       icon: 'addRealestate'
+  //     }
+  //   }]
+  // },
+
   {
-    path: '/addRealestate',
+    path: '/prescription',
     component: Layout,
+    redirect: '/prescription/all',
+    name: 'Prescription',
+    alwaysShow: true,
     meta: {
-      roles: ['admin']
+      title: '病历',
+      icon: 'donating'
+    },
+    children: [
+      {
+        path: 'all',
+        name: 'PrescriptionAll',
+        component: () => import('@/views/donating/all/index'),
+        meta: {
+          title: '所有病历',
+          icon: 'donatingAll'
+        }
+      },
+      {
+        path: 'creator',
+        name: 'PrescriptionCreator',
+        component: () => import('@/views/donating/donor/index'),
+        meta: {
+          roles: ['editor'],
+          title: '我创建的病历',
+          icon: 'donatingDonor'
+        }
+      },
+      {
+        path: 'add',
+        name: 'Add',
+        component: () => import('@/views/realestate/add/index'),
+        meta: {
+          title: '新增病历',
+          icon: 'addRealestate'
+        }
+      }
+    ]
+  },
+
+  {
+    path: '/insurance',
+    component: Layout,
+    redirect: '/insurance/all',
+    name: 'Insurance',
+    alwaysShow: true,
+    meta: {
+      title: '保险报销',
+      icon: 'donating'
+    },
+    children: [
+
+        {
+      path: 'all',
+      name: 'InsuranceAll',
+      component: () => import('@/views/donating/all/index'),
+      meta: {
+        title: '所有的报销记录',
+        icon: 'donatingAll'
+      }
+    },
+      {
+        path: 'creator',
+        name: 'InsuranceCreator',
+        component: () => import('@/views/donating/donor/index'),
+        meta: {
+          roles: ['editor'],
+          title: '已发起的报销',
+          icon: 'donatingDonor'
+        }
+      }, {
+        path: 'receiver',
+        name: 'InsuranceReceiver',
+        component: () => import('@/views/donating/grantee/index'),
+        meta: {
+          roles: ['admin'],
+          title: '收到的报销',
+          icon: 'donatingGrantee'
+        }
+      },
+      {
+        path: 'add',
+        name: 'Add',
+        component: () => import('@/views/realestate/add/index'),
+        meta: {
+          title: '新增保险报销',
+          icon: 'addRealestate'
+        }
+      }
+    ]
+  },
+
+  {
+    path: '/drug',
+    component: Layout,
+    redirect: '/drug/all',
+    name: 'Drug',
+    alwaysShow: true,
+    meta: {
+      title: '药品',
+      icon: 'donating'
     },
     children: [{
-      path: '/addRealestate',
-      name: 'AddRealestate',
-      component: () => import('@/views/realestate/add/index'),
+      path: 'all',
+      name: 'DrugAll',
+      component: () => import('@/views/donating/all/index'),
       meta: {
-        title: '新增房产',
-        icon: 'addRealestate'
+        title: '所有药品',
+        icon: 'donatingAll'
       }
-    }]
+    },
+      {
+        path: '/addDrug',
+        name: 'AddDrug',
+        component: () => import('@/views/realestate/add/index'),
+        meta: {
+          title: '新增药品',
+          icon: 'addRealestate'
+        }
+      }]
   },
 
   // 404 page must be placed at the end !!!

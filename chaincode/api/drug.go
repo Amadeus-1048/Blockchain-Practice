@@ -26,7 +26,7 @@ func CreateDrugOrder(stub shim.ChaincodeStubInterface, args []string) pb.Respons
 	}
 
 	// 判断是否为药店操作
-	resultsAccount, err := utils.GetStateByPartialCompositeKeys(stub, model.DrugKey, []string{DrugStoreID})
+	resultsAccount, err := utils.GetStateByPartialCompositeKeys(stub, model.AccountV2Key, []string{DrugStoreID})
 	if err != nil || len(resultsAccount) != 1 {
 		return shim.Error(fmt.Sprintf("操作人权限验证失败%s", err))
 	}
