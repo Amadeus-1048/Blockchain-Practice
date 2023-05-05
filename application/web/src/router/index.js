@@ -218,7 +218,7 @@ export const asyncRoutes = [
         {
       path: 'all',
       name: 'InsuranceAll',
-      component: () => import('@/views/donating/all/index'),
+      component: () => import('@/views/insuranceCover/list/index'),
       meta: {
         title: '所有的报销记录',
         icon: 'donatingAll'
@@ -246,7 +246,7 @@ export const asyncRoutes = [
       {
         path: 'add',
         name: 'Add',
-        component: () => import('@/views/realestate/add/index'),
+        component: () => import('@/views/insuranceCover/add/index'),
         meta: {
           title: '新增保险报销',
           icon: 'addRealestate'
