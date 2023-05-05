@@ -262,24 +262,24 @@ export const asyncRoutes = [
     name: 'Drug',
     alwaysShow: true,
     meta: {
-      title: '药品',
+      title: '药品订单',
       icon: 'donating'
     },
     children: [{
       path: 'all',
       name: 'DrugAll',
-      component: () => import('@/views/donating/all/index'),
+      component: () => import('@/views/drugOrder/list/index'),
       meta: {
-        title: '所有药品',
+        title: '所有订单',
         icon: 'donatingAll'
       }
     },
       {
         path: '/addDrug',
         name: 'AddDrug',
-        component: () => import('@/views/realestate/add/index'),
+        component: () => import('@/views/drugOrder/add/index'),
         meta: {
-          title: '新增药品',
+          title: '新增订单',
           icon: 'addRealestate'
         }
       }]
