@@ -14,7 +14,7 @@ type DrugOrderRequestBody struct {
 	//Drug      []Drug `json:"drug"`      // 药品列表及用量
 	DrugName     string `json:"drug_name"`    // 药品名
 	DrugAmount   string `json:"drug_amount"`  // 药品用量
-	Prescription string `json:"prescription"` // 处方 ID
+	Prescription string `json:"prescription"` // 处方ID
 	Patient      string `json:"patient"`      // 患者Id
 	DrugStore    string `json:"drug_store"`   // 药店Id
 }
