@@ -11,7 +11,7 @@ import (
 )
 
 type AccountIdBody struct {
-	AccountId string `json:"accountId"`
+	AccountId string `json:"account_id"`
 }
 
 type AccountRequestBody struct {

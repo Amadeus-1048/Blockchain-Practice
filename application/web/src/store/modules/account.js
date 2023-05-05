@@ -1,6 +1,6 @@
 import {
   login
-} from '@/api/account'
+} from '@/api/accountV2'
 import {
   getToken,
   setToken,
@@ -13,9 +13,8 @@ import {
 const getDefaultState = () => {
   return {
     token: getToken(),
-    accountId: '',
-    userName: '',
-    balance: 0,
+    account_id: '',
+    account_name: '',
     roles: []
   }
 }
@@ -29,14 +28,11 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_ACCOUNTID: (state, accountId) => {
-    state.accountId = accountId
+  SET_ACCOUNTID: (state, account_id) => {
+    state.account_id = account_id
   },
-  SET_USERNAME: (state, userName) => {
-    state.userName = userName
-  },
-  SET_BALANCE: (state, balance) => {
-    state.balance = balance
+  SET_USERNAME: (state, account_name) => {
+    state.account_name = account_name
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
@@ -46,15 +42,15 @@ const mutations = {
 const actions = {
   login({
     commit
-  }, accountId) {
+  }, account_id) {
     return new Promise((resolve, reject) => {
       login({
         args: [{
-          accountId: accountId
+          account_id: account_id
         }]
       }).then(response => {
-        commit('SET_TOKEN', response[0].accountId)
-        setToken(response[0].accountId)
+        commit('SET_TOKEN', response[0].account_id)
+        setToken(response[0].account_id)
         resolve()
       }).catch(error => {
         reject(error)
@@ -69,19 +65,18 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({
         args: [{
-          accountId: state.token
+          account_id: state.token
         }]
       }).then(response => {
         var roles
-        if (response[0].userName === '管理员') {
+        if (response[0].account_name === '医生') {
           roles = ['admin']
         } else {
           roles = ['editor']
         }
         commit('SET_ROLES', roles)
-        commit('SET_ACCOUNTID', response[0].accountId)
-        commit('SET_USERNAME', response[0].userName)
-        commit('SET_BALANCE', response[0].balance)
+        commit('SET_ACCOUNTID', response[0].account_id)
+        commit('SET_USERNAME', response[0].account_name)
         resolve(roles)
       }).catch(error => {
         reject(error)

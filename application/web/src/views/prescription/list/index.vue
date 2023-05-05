@@ -3,49 +3,57 @@
     <el-alert
       type="success"
     >
-      <p>账户ID: {{ accountId }}</p>
-      <p>用户名: {{ userName }}</p>
-      <p>余额: ￥{{ balance }} 元</p>
-      <p>当发起出售、捐赠或质押操作后，担保状态为true</p>
-      <p>当担保状态为false时，才可发起出售、捐赠或质押操作</p>
+      <p>账户ID: {{ account_id }}</p>
+      <p>用户名: {{ account_name }}</p>
+
     </el-alert>
-    <div v-if="realEstateList.length==0" style="text-align: center;">
+    <div v-if="prescriptionList.length==0" style="text-align: center;">
       <el-alert
         title="查询不到数据"
         type="warning"
       />
     </div>
     <el-row v-loading="loading" :gutter="20">
-      <el-col v-for="(val,index) in realEstateList" :key="index" :span="6" :offset="1">
-        <el-card class="realEstate-card">
+      <el-col v-for="(val,index) in prescriptionList" :key="index" :span="6" :offset="1">
+        <el-card class="prescription-card">
           <div slot="header" class="clearfix">
             担保状态:
             <span style="color: rgb(255, 0, 0);">{{ val.encumbrance }}</span>
           </div>
 
           <div class="item">
-            <el-tag>房产ID: </el-tag>
-            <span>{{ val.realEstateId }}</span>
+            <el-tag>病历ID: </el-tag>
+            <span>{{ val.id }}</span>
           </div>
           <div class="item">
-            <el-tag type="success">业主ID: </el-tag>
-            <span>{{ val.proprietor }}</span>
+            <el-tag type="success">病人ID: </el-tag>
+            <span>{{ val.patient }}</span>
           </div>
           <div class="item">
-            <el-tag type="warning">总空间: </el-tag>
-            <span>{{ val.totalArea }} ㎡</span>
+            <el-tag type="warning">医生: </el-tag>
+            <span>{{ val.doctor }}</span>
           </div>
           <div class="item">
-            <el-tag type="danger">居住空间: </el-tag>
-            <span>{{ val.livingSpace }} ㎡</span>
+            <el-tag type="danger">诊断: </el-tag>
+            <span>{{ val.diagnosis }}</span>
+          </div>
+          <div class="item">
+            <el-tag type="danger">药品: </el-tag>
+            <span>
+    <span v-for="(drug, index) in val.drug" :key="index">{{ drug.Name }} {{drug.amount}}份 <br v-if="index !== val.drug.length - 1"></span>
+  </span>
+          </div>
+          <div class="item">
+            <el-tag type="danger">备注: </el-tag>
+            <span>{{ val.comment }}</span>
           </div>
 
-          <div v-if="!val.encumbrance&&roles[0] !== 'admin'">
+          <div v-if="!val.encumbrance&&roles[0] !== 'doctor'">
             <el-button type="text" @click="openDialog(val)">出售</el-button>
             <el-divider direction="vertical" />
             <el-button type="text" @click="openDonatingDialog(val)">捐赠</el-button>
           </div>
-          <el-rate v-if="roles[0] === 'admin'" />
+          <el-rate v-if="roles[0] === 'doctor'" />
         </el-card>
       </el-col>
     </el-row>
@@ -69,12 +77,12 @@
           <el-select v-model="DonatingForm.proprietor" placeholder="请选择业主" @change="selectGet">
             <el-option
               v-for="item in accountList"
-              :key="item.accountId"
-              :label="item.userName"
-              :value="item.accountId"
+              :key="item.account_id"
+              :label="item.account_name"
+              :value="item.account_id"
             >
-              <span style="float: left">{{ item.userName }}</span>
-              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.accountId }}</span>
+              <span style="float: left">{{ item.account_name }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.account_id }}</span>
             </el-option>
           </el-select>
         </el-form-item>
@@ -90,12 +98,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import { queryAccountList } from '@/api/accountV2'
-import { queryRealEstateList } from '@/api/realEstate'
-import { createSelling } from '@/api/selling'
-import { createDonating } from '@/api/donating'
+import { queryPrescriptionList } from '@/api/prescription'
 
 export default {
-  name: 'RealeState',
+  name: 'Prescription',
   data() {
     var checkArea = (rule, value, callback) => {
       if (value <= 0) {
@@ -107,7 +113,7 @@ export default {
     return {
       loading: true,
       loadingDialog: false,
-      realEstateList: [],
+      prescriptionList: [],
       dialogCreateSelling: false,
       dialogCreateDonating: false,
       realForm: {
@@ -136,26 +142,25 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'accountId',
+      'account_id',
       'roles',
-      'userName',
-      'balance'
+      'account_name',
     ])
   },
   created() {
     if (this.roles[0] === 'admin') {
-      queryRealEstateList().then(response => {
+      queryPrescriptionList().then(response => {
         if (response !== null) {
-          this.realEstateList = response
+          this.prescriptionList = response
         }
         this.loading = false
       }).catch(_ => {
         this.loading = false
       })
     } else {
-      queryRealEstateList({ proprietor: this.accountId }).then(response => {
+      queryPrescriptionList({ patient: this.account_id }).then(response => {
         if (response !== null) {
-          this.realEstateList = response
+          this.prescriptionList = response
         }
         this.loading = false
       }).catch(_ => {
@@ -311,9 +316,9 @@ export default {
     clear: both
   }
 
-  .realEstate-card {
+  .prescription-card {
     width: 280px;
-    height: 340px;
+    height: 640px;
     margin: 18px;
   }
 </style>

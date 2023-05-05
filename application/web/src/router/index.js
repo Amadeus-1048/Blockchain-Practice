@@ -175,26 +175,26 @@ export const asyncRoutes = [
       {
         path: 'all',
         name: 'PrescriptionAll',
-        component: () => import('@/views/donating/all/index'),
+        component: () => import('@/views/prescription/list/index'),
         meta: {
           title: '所有病历',
           icon: 'donatingAll'
         }
       },
       {
-        path: 'creator',
-        name: 'PrescriptionCreator',
-        component: () => import('@/views/donating/donor/index'),
+        path: 'mine',
+        name: 'PrescriptionOfMine',
+        component: () => import('@/views/prescription/mine/index'),
         meta: {
-          roles: ['editor'],
-          title: '我创建的病历',
+          // roles: ['patient'],
+          title: '我的病历',
           icon: 'donatingDonor'
         }
       },
       {
         path: 'add',
         name: 'Add',
-        component: () => import('@/views/realestate/add/index'),
+        component: () => import('@/views/prescription/add/index'),
         meta: {
           title: '新增病历',
           icon: 'addRealestate'

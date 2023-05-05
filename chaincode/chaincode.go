@@ -41,8 +41,8 @@ func (t *BlockChainMedicalInfoManageSystem) Init(stub shim.ChaincodeStubInterfac
 		}
 	}
 
-	var accountV2Ids = [6]string{"1feceb66ffc1", "2b86b273ff31", "34735e3a261e", "4e17408561be", "5b227771d4dd", "6f2d121de37b"}
-	var userNameV2s = [6]string{"医生", "①号病人", "②号病人", "③号病人", "药店", "保险机构"}
+	var accountV2Ids = [7]string{"0feceb66ffc1", "1feceb66ffc1", "2b86b273ff31", "34735e3a261e", "4e17408561be", "5b227771d4dd", "6f2d121de37b"}
+	var userNameV2s = [7]string{"管理员", "医生", "①号病人", "②号病人", "③号病人", "药店", "保险机构"}
 	//初始化账号数据
 	for i, val := range accountV2Ids {
 		account := &model.AccountV2{

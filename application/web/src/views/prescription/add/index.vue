@@ -2,8 +2,8 @@
   <div class="app-container">
     <el-form ref="ruleForm" v-loading="loading" :model="ruleForm" :rules="rules" label-width="100px">
 
-      <el-form-item label="业主" prop="proprietor">
-        <el-select v-model="ruleForm.proprietor" placeholder="请选择业主" @change="selectGet">
+      <el-form-item label="病人" prop="patient">
+        <el-select v-model="ruleForm.patient" placeholder="请选择病人" @change="selectGet">
           <el-option
             v-for="item in accountList"
             :key="item.account_id"
@@ -15,11 +15,17 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="总空间 ㎡" prop="totalArea">
-        <el-input-number v-model="ruleForm.totalArea" :precision="2" :step="0.1" :min="0" />
+      <el-form-item label="诊断" prop="diagnosis">
+        <el-input v-model="ruleForm.diagnosis" style="width: 197px"/>
       </el-form-item>
-      <el-form-item label="居住空间 ㎡" prop="livingSpace">
-        <el-input-number v-model="ruleForm.livingSpace" :precision="2" :step="0.1" :min="0" />
+      <el-form-item label="药品名" prop="drug_name">
+        <el-input v-model="ruleForm.drug_name" style="width: 197px" />
+      </el-form-item>
+      <el-form-item label="药品数量" prop="drug_amount">
+        <el-input-number v-model="ruleForm.drug_amount" :precision="0" :step="1" :min="1" style="width: 197px" />
+      </el-form-item>
+      <el-form-item label="备注" prop="comment">
+        <el-input v-model="ruleForm.comment" style="width: 197px" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -32,10 +38,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import { queryAccountList } from '@/api/accountV2'
-import { createRealEstate } from '@/api/realEstate'
+import { createPrescription } from '@/api/prescription'
 
 export default {
-  name: 'AddRealeState',
+  name: 'AddPrescription',
   data() {
     var checkArea = (rule, value, callback) => {
       if (value <= 0) {
@@ -46,28 +52,30 @@ export default {
     }
     return {
       ruleForm: {
-        proprietor: '',
-        totalArea: 0,
-        livingSpace: 0
+        patient: '',
+        diagnosis: '',
+        drug_name: '',
+        drug_amount: '',
+        comment:'',
       },
       accountList: [],
       rules: {
-        proprietor: [
-          { required: true, message: '请选择业主', trigger: 'change' }
+        patient: [
+          { required: true, message: '请选择病人', trigger: 'change' }
         ],
-        totalArea: [
-          { validator: checkArea, trigger: 'blur' }
-        ],
-        livingSpace: [
-          { validator: checkArea, trigger: 'blur' }
-        ]
+        // totalArea: [
+        //   { validator: checkArea, trigger: 'blur' }
+        // ],
+        // livingSpace: [
+        //   { validator: checkArea, trigger: 'blur' }
+        // ]
       },
-      loading: false
+      loading: false,
     }
   },
   computed: {
     ...mapGetters([
-      'accountId'
+      'account_id'
     ])
   },
   created() {
@@ -75,7 +83,8 @@ export default {
       if (response !== null) {
         // 过滤掉管理员
         this.accountList = response.filter(item =>
-          item.userName !== '管理员'
+          //item.account_name !== '医生'
+            /病人$/.test(item.account_name)
         )
       }
     })
@@ -90,11 +99,14 @@ export default {
             type: 'success'
           }).then(() => {
             this.loading = true
-            createRealEstate({
-              accountId: this.accountId,
-              proprietor: this.ruleForm.proprietor,
-              totalArea: this.ruleForm.totalArea,
-              livingSpace: this.ruleForm.livingSpace
+            createPrescription({
+              doctor: this.account_id,
+              patient: this.ruleForm.patient,
+              diagnosis: this.ruleForm.diagnosis,
+              drug_name: this.ruleForm.drug_name,
+              drug_amount: this.ruleForm.drug_amount.toString(),
+              hospital:'0feceb66ffc1',
+              comment: this.ruleForm.comment,
             }).then(response => {
               this.loading = false
               if (response !== null) {
@@ -126,9 +138,9 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    selectGet(accountId) {
-      this.ruleForm.proprietor = accountId
-    }
+    selectGet(account_id) {
+      this.ruleForm.patient = account_id
+    },
   }
 }
 </script>

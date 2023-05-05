@@ -28,6 +28,19 @@ func InitRouter() *gin.Engine {
 	}
 	apiV2 := r.Group("/api/v2")
 	{
+		//
+		apiV2.POST("/createRealEstate", v1.CreateRealEstate)
+		apiV2.POST("/queryRealEstateList", v1.QueryRealEstateList)
+		apiV2.POST("/createSelling", v1.CreateSelling)
+		apiV2.POST("/createSellingByBuy", v1.CreateSellingByBuy)
+		apiV2.POST("/querySellingList", v1.QuerySellingList)
+		apiV2.POST("/querySellingListByBuyer", v1.QuerySellingListByBuyer)
+		apiV2.POST("/updateSelling", v1.UpdateSelling)
+		apiV2.POST("/createDonating", v1.CreateDonating)
+		apiV2.POST("/queryDonatingList", v1.QueryDonatingList)
+		apiV2.POST("/queryDonatingListByGrantee", v1.QueryDonatingListByGrantee)
+		apiV2.POST("/updateDonating", v1.UpdateDonating)
+		//
 		apiV2.GET("/hello", v2.Hello)
 		apiV2.POST("/queryAccountV2List", v2.QueryAccountV2List)
 		apiV2.POST("/createPrescription", v2.CreatePrescription)

@@ -8,12 +8,12 @@
       <el-select v-model="value" placeholder="请选择用户角色" class="login-select" @change="selectGet">
         <el-option
           v-for="item in accountList"
-          :key="item.accountId"
-          :label="item.userName"
-          :value="item.accountId"
+          :key="item.account_id"
+          :label="item.account_name"
+          :value="item.account_id"
         >
-          <span style="float: left">{{ item.userName }}</span>
-          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.accountId }}</span>
+          <span style="float: left">{{ item.account_name }}</span>
+          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.account_id }}</span>
         </el-option>
       </el-select>
 
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { queryAccountList } from '@/api/account'
+import { queryAccountList } from '@/api/accountV2'
 
 export default {
   name: 'Login',
@@ -69,8 +69,8 @@ export default {
         this.$message('请选择用户角色')
       }
     },
-    selectGet(accountId) {
-      this.value = accountId
+    selectGet(account_id) {
+      this.value = account_id
     }
   }
 }

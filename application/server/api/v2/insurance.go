@@ -17,7 +17,7 @@ type InsuranceCoverRequestBody struct {
 }
 
 type InsuranceCoverQueryRequestBody struct {
-	Patient string `json:"patient"` // 患者AccountId
+	Patient string `json:"patient"` // 患者Id
 }
 
 func CreateInsuranceCover(c *gin.Context) {

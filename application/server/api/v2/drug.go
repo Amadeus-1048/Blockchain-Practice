@@ -20,8 +20,8 @@ type DrugOrderRequestBody struct {
 }
 
 type DrugOrderQueryRequestBody struct {
-	Patient   string `json:"patient"`    // 患者AccountId
-	DrugStore string `json:"drug_store"` // 患者AccountId
+	Patient   string `json:"patient"` // 患者AccountId
+	DrugStore string `json:"drug_store"`
 }
 
 func CreateDrugOrder(c *gin.Context) {
