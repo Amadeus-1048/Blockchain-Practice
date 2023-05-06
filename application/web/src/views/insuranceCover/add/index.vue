@@ -16,7 +16,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="病历" prop="insuranceCover">
+      <el-form-item label="病历" prop="prescription">
         <el-select v-model="ruleForm.prescription" placeholder="请选择病历" :disabled="!ruleForm.patient" @change="selectGetPrescriptionList">
           <el-option
               v-for="item in prescriptionList"
@@ -133,8 +133,8 @@ export default {
           this.prescriptionList = response
       })
     },
-    selectGetPrescriptionList(insuranceCover) {
-      this.ruleForm.prescriptionList = insuranceCover
+    selectGetPrescriptionList(prescription) {
+      this.ruleForm.prescription = prescription
     },
   }
 }
