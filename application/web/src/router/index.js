@@ -45,10 +45,10 @@ export const constantRoutes = [{
 {
   path: '/',
   component: Layout,
-  redirect: '/realestate',
+  redirect: '/main',
   children: [{
-    path: 'realestate',
-    name: 'Realestate',
+    path: 'main',
+    name: 'main',
     component: () => import('@/views/realestate/list/index'),
     meta: {
       title: '主页',
@@ -80,6 +80,7 @@ export const asyncRoutes = [
         name: 'PrescriptionAll',
         component: () => import('@/views/prescription/list/index'),
         meta: {
+          roles: ['admin','doctor'],
           title: '所有病历',
           icon: 'donatingAll'
         }
@@ -89,7 +90,7 @@ export const asyncRoutes = [
         name: 'PrescriptionOfMine',
         component: () => import('@/views/prescription/mine/index'),
         meta: {
-          // roles: ['patient'],
+          roles: ['admin','patient'],
           title: '我的病历',
           icon: 'donatingDonor'
         }
@@ -99,6 +100,7 @@ export const asyncRoutes = [
         name: 'Add',
         component: () => import('@/views/prescription/add/index'),
         meta: {
+          roles: ['admin','doctor'],
           title: '新增病历',
           icon: 'addRealestate'
         }
@@ -123,6 +125,7 @@ export const asyncRoutes = [
       name: 'InsuranceAll',
       component: () => import('@/views/insuranceCover/list/index'),
       meta: {
+        roles: ['admin','insurance'],
         title: '所有的报销记录',
         icon: 'donatingAll'
       }
@@ -132,18 +135,9 @@ export const asyncRoutes = [
         name: 'InsuranceCreator',
         component: () => import('@/views/donating/donor/index'),
         meta: {
-          roles: ['editor'],
+          roles: ['admin','patient'],
           title: '已发起的报销',
           icon: 'donatingDonor'
-        }
-      }, {
-        path: 'receiver',
-        name: 'InsuranceReceiver',
-        component: () => import('@/views/donating/grantee/index'),
-        meta: {
-          roles: ['admin'],
-          title: '收到的报销',
-          icon: 'donatingGrantee'
         }
       },
       {
@@ -151,6 +145,7 @@ export const asyncRoutes = [
         name: 'Add',
         component: () => import('@/views/insuranceCover/add/index'),
         meta: {
+          roles: ['admin','insurance','patient'],
           title: '新增保险报销',
           icon: 'addRealestate'
         }
@@ -173,6 +168,7 @@ export const asyncRoutes = [
       name: 'DrugAll',
       component: () => import('@/views/drugOrder/list/index'),
       meta: {
+        roles: ['admin','drugstore'],
         title: '所有订单',
         icon: 'donatingAll'
       }
@@ -182,6 +178,7 @@ export const asyncRoutes = [
         name: 'AddDrug',
         component: () => import('@/views/drugOrder/add/index'),
         meta: {
+          roles: ['admin','drugstore'],
           title: '新增订单',
           icon: 'addRealestate'
         }

@@ -147,7 +147,7 @@ export default {
     ])
   },
   created() {
-    if (this.roles[0] === 'admin') {
+    if (this.roles[0] === 'admin' || this.roles[0] === 'doctor') {
       queryPrescriptionList().then(response => {
         if (response !== null) {
           this.prescriptionList = response
