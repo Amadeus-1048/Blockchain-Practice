@@ -126,7 +126,8 @@ export default {
 <style>
   .container{
     width: 100%;
-    text-align: center;
+    /*text-align: center;*/
+    font-size: 15px;
     min-height: 100%;
     overflow: hidden;
   }

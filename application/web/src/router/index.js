@@ -49,7 +49,7 @@ export const constantRoutes = [{
   children: [{
     path: 'main',
     name: 'main',
-    component: () => import('@/views/realestate/list/index'),
+    component: () => import('@/views/mainPage/list/index'),
     meta: {
       title: '主页',
       icon: 'realestate'

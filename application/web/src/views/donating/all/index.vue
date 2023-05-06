@@ -127,8 +127,9 @@ export default {
 <style>
   .container{
     width: 100%;
-    text-align: center;
+    /*text-align: center;*/
     min-height: 100%;
+    font-size: 15px;
     overflow: hidden;
   }
   .tag {

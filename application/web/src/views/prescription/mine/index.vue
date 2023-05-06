@@ -293,9 +293,10 @@ export default {
 <style>
 .container{
   width: 100%;
-  text-align: center;
+  /*text-align: center;*/
   min-height: 100%;
   overflow: hidden;
+  font-size: 15px;
 }
 .tag {
   float: left;

@@ -33,7 +33,7 @@
             <el-tag type="warning">病人ID: </el-tag>
             <span>{{ val.patient }}</span>
           </div>
-          <div v-if="val.status==='处理中'&&(roles[0] === 'admin' || roles[0] === 'doctor')">
+          <div v-if="val.status==='处理中'&&(roles[0] === 'admin' || roles[0] === 'insurance')" style="display: flex; justify-content: center; align-items: center;" >
             <el-button type="text" @click="openProcessingDialog(val)">处 理</el-button>
           </div>
 
@@ -185,9 +185,10 @@ export default {
 <style>
   .container{
     width: 100%;
-    text-align: center;
+    /*text-align: center;*/
     min-height: 100%;
     overflow: hidden;
+    font-size: 15px;
   }
   .tag {
     float: left;
