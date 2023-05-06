@@ -53,7 +53,6 @@
             <el-divider direction="vertical" />
             <el-button type="text" @click="openDonatingDialog(val)">捐赠</el-button>
           </div>
-          <el-rate v-if="roles[0] === 'doctor'" />
         </el-card>
       </el-col>
     </el-row>
@@ -318,7 +317,7 @@ export default {
 
 .prescription-card {
   width: 280px;
-  height: 640px;
+  height: 440px;
   margin: 18px;
 }
 </style>

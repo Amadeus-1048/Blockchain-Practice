@@ -7,22 +7,22 @@
       <p>用户名: {{ account_name }}</p>
 
     </el-alert>
-    <div v-if="drugOrderList.length==0" style="text-align: center;">
+    <div v-if="insuranceCoverList.length==0" style="text-align: center;">
       <el-alert
         title="查询不到数据"
         type="warning"
       />
     </div>
     <el-row v-loading="loading" :gutter="20">
-      <el-col v-for="(val,index) in drugOrderList" :key="index" :span="6" :offset="1">
-        <el-card class="drugOrder-card">
+      <el-col v-for="(val,index) in insuranceCoverList" :key="index" :span="6" :offset="1">
+        <el-card class="insuranceCover-card">
           <div slot="header" class="clearfix">
-            担保状态:
-            <span style="color: rgb(255, 0, 0);">{{ val.encumbrance }}</span>
+            报销状态:
+            <span :style="{ color: getStatusColor(val.status) }">{{ val.status }}</span>
           </div>
 
           <div class="item">
-            <el-tag>药品订单ID: </el-tag>
+            <el-tag>报销记录ID: </el-tag>
             <span>{{ val.id }}</span>
           </div>
           <div class="item">
@@ -34,12 +34,8 @@
             <span>{{ val.patient }}</span>
           </div>
           <div class="item">
-            <el-tag type="warning">药品名: </el-tag>
-            <span>{{ val.Name }}</span>
-          </div>
-          <div class="item">
-            <el-tag type="warning">药品数量: </el-tag>
-            <span>{{ val.amount }} 份</span>
+            <el-tag type="warning">报销状态: </el-tag>
+            <span>{{ val.status }}</span>
           </div>
 
 
@@ -48,7 +44,7 @@
             <el-divider direction="vertical" />
             <el-button type="text" @click="openDonatingDialog(val)">捐赠</el-button>
           </div>
-          <el-rate v-if="roles[0] === 'admin'" />
+
         </el-card>
       </el-col>
     </el-row>
@@ -93,10 +89,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import { queryAccountList } from '@/api/accountV2'
-import { queryDrugOrderList } from '@/api/drugOrder'
+import { queryInsuranceCoverList } from '@/api/insuranceCover'
 
 export default {
-  name: 'DrugOrder',
+  name: 'insuranceCover',
   data() {
     var checkArea = (rule, value, callback) => {
       if (value <= 0) {
@@ -108,7 +104,7 @@ export default {
     return {
       loading: true,
       loadingDialog: false,
-      drugOrderList: [],
+      insuranceCoverList: [],
       dialogCreateSelling: false,
       dialogCreateDonating: false,
       realForm: {
@@ -144,18 +140,18 @@ export default {
   },
   created() {
     if (this.roles[0] === 'admin') {
-      queryDrugOrderList().then(response => {
+      queryInsuranceCoverList().then(response => {
         if (response !== null) {
-          this.drugOrderList = response
+          this.insuranceCoverList = response
         }
         this.loading = false
       }).catch(_ => {
         this.loading = false
       })
     } else {
-      queryDrugOrderList(/*{ patient: this.account_id }*/).then(response => {
+      queryInsuranceCoverList(/*{ patient: this.account_id }*/).then(response => {
         if (response !== null) {
-          this.drugOrderList = response
+          this.insuranceCoverList = response
         }
         this.loading = false
       }).catch(_ => {
@@ -280,6 +276,16 @@ export default {
     },
     selectGet(account_id) {
       this.DonatingForm.proprietor = account_id
+    },
+    // 根据状态返回不同的颜色值
+    getStatusColor(status) {
+      if (status === '处理中') {
+        return 'red'; // 如果状态为 '处理中'，返回红色
+      } else if (status === '已通过') {
+        return 'green'; // 如果状态为 'approved'，返回绿色
+      } else {
+        return 'black'; // 默认返回黑色
+      }
     }
   }
 }
@@ -311,9 +317,9 @@ export default {
     clear: both
   }
 
-  .drugOrder-card {
+  .insuranceCover-card {
     width: 280px;
-    height: 640px;
+    height: 440px;
     margin: 18px;
   }
 </style>

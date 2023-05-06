@@ -48,7 +48,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { queryAccountList } from '@/api/accountV2'
-import {createPrescription, queryPrescriptionList} from '@/api/prescription'
+import { queryPrescriptionList} from '@/api/prescription'
 import {createDrugOrder} from "@/api/drugOrder";
 
 export default {

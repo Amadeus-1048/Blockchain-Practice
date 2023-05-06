@@ -16,8 +16,8 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="病历" prop="prescription">
-        <el-select v-model="ruleForm.prescription" placeholder="请选择病历" :disabled="!ruleForm.patient" @change="selectGetPrescription">
+      <el-form-item label="病历" prop="insuranceCover">
+        <el-select v-model="ruleForm.prescription" placeholder="请选择病历" :disabled="!ruleForm.patient" @change="selectGetPrescriptionList">
           <el-option
               v-for="item in prescriptionList"
               :key="item.id"
@@ -30,12 +30,6 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="药品名" prop="drug_name">
-        <el-input v-model="ruleForm.drug_name" style="width: 197px" />
-      </el-form-item>
-      <el-form-item label="药品数量" prop="drug_amount">
-        <el-input-number v-model="ruleForm.drug_amount" :precision="0" :step="1" :min="1" style="width: 197px" />
-      </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -48,19 +42,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import { queryAccountList } from '@/api/accountV2'
-import {createPrescription, queryPrescriptionList} from '@/api/prescription'
-import {createDrugOrder} from "@/api/drugOrder";
+import {createInsuranceCover} from '@/api/insuranceCover'
+import { queryPrescriptionList} from '@/api/prescription'
+
 
 export default {
-  name: 'AddDrugOrder',
+  name: 'AddInsuranceCover',
   data() {
     return {
       ruleForm: {
         patient: '',
         prescription: '',
-        drug_name: '',
-        drug_amount: '',
-        drug_store:'0feceb66ffc1',
+        status: 'processing',
       },
       accountList: [],
       prescriptionList: [],
@@ -99,12 +92,10 @@ export default {
             type: 'success'
           }).then(() => {
             this.loading = true
-            createDrugOrder({
+            createInsuranceCover({
               patient: this.ruleForm.patient,
               prescription: this.ruleForm.prescription,
-              drug_name: this.ruleForm.drug_name,
-              drug_amount: this.ruleForm.drug_amount.toString(),
-              drug_store:'0feceb66ffc1',
+              status:'processing',
             }).then(response => {
               this.loading = false
               if (response !== null) {
@@ -142,8 +133,8 @@ export default {
           this.prescriptionList = response
       })
     },
-    selectGetPrescription(prescription) {
-      this.ruleForm.prescription = prescription
+    selectGetPrescriptionList(insuranceCover) {
+      this.ruleForm.prescriptionList = insuranceCover
     },
   }
 }
