@@ -69,10 +69,16 @@ const actions = {
         }]
       }).then(response => {
         var roles
-        if (response[0].account_name === '医生') {
+        if (/管理员/.test(response[0].account_name)) {
           roles = ['admin']
-        } else {
-          roles = ['editor']
+        } else if (/医生/.test(response[0].account_name)){
+          roles = ['doctor']
+        } else if (/病人/.test(response[0].account_name)){
+          roles = ['patient']
+        } else if (/药店/.test(response[0].account_name)){
+          roles = ['drugstore']
+        } else if (/保险机构/.test(response[0].account_name)){
+          roles = ['insurance']
         }
         commit('SET_ROLES', roles)
         commit('SET_ACCOUNTID', response[0].account_id)
