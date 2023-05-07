@@ -71,6 +71,7 @@ export const asyncRoutes = [
     name: 'Prescription',
     alwaysShow: true,
     meta: {
+      roles: ['admin','doctor','patient'],
       title: '病历',
       icon: 'donating'
     },
@@ -115,6 +116,7 @@ export const asyncRoutes = [
     name: 'Insurance',
     alwaysShow: true,
     meta: {
+      roles: ['admin','insurance','patient'],
       title: '保险报销',
       icon: 'donating'
     },
@@ -160,6 +162,7 @@ export const asyncRoutes = [
     name: 'Drug',
     alwaysShow: true,
     meta: {
+      roles: ['admin','drugstore','patient'],
       title: '药品订单',
       icon: 'donating'
     },
@@ -173,6 +176,16 @@ export const asyncRoutes = [
         icon: 'donatingAll'
       }
     },
+      {
+        path: 'mine',
+        name: 'DrugMine',
+        component: () => import('@/views/drugOrder/mine/index'),
+        meta: {
+          roles: ['admin', 'patient'],
+          title: '我的订单',
+          icon: 'donatingAll'
+        }
+      },
       {
         path: '/addDrug',
         name: 'AddDrug',

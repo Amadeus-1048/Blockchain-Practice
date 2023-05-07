@@ -20,7 +20,7 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">立即进入</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">tips: 选择不同的用户角色体验系统</span>
+        <span style="margin-right:20px;">请选择不同的用户角色体验系统</span>
       </div>
 
     </el-form>
