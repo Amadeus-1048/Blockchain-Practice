@@ -17,20 +17,16 @@
       <el-col v-for="(val,index) in drugOrderList" :key="index" :span="6" :offset="1">
         <el-card class="drugOrder-card">
           <div slot="header" class="clearfix">
-            担保状态:
-            <span style="color: rgb(255, 0, 0);">{{ val.encumbrance }}</span>
+            药品订单ID:
+            <span style="color: rgb(255, 0, 0);">{{ val.id }}</span>
           </div>
 
           <div class="item">
-            <el-tag>药品订单ID: </el-tag>
-            <span style="margin-left: 5px;">{{ val.id }}</span>
-          </div>
-          <div class="item">
-            <el-tag type="success">病历ID: </el-tag>
+            <el-tag>病历ID: </el-tag>
             <span style="margin-left: 5px;">{{ val.prescription }}</span>
           </div>
           <div class="item">
-            <el-tag type="warning">病人ID: </el-tag>
+            <el-tag type="success">病人ID: </el-tag>
             <span style="margin-left: 5px;">{{ val.patient }}</span>
           </div>
           <div class="item">
@@ -57,13 +53,6 @@ import { queryDrugOrderList } from '@/api/drugOrder'
 export default {
   name: 'DrugOrder',
   data() {
-    var checkArea = (rule, value, callback) => {
-      if (value <= 0) {
-        callback(new Error('必须大于0'))
-      } else {
-        callback()
-      }
-    }
     return {
       loading: true,
       drugOrderList: [],
@@ -132,7 +121,7 @@ export default {
 
   .drugOrder-card {
     width: 280px;
-    height: 340px;
+    height: 280px;
     margin: 18px;
   }
 </style>
