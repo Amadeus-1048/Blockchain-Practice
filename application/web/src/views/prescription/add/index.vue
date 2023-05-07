@@ -61,7 +61,7 @@ export default {
       accountList: [],
       rules: {
         patient: [
-          { required: true, message: '请选择病人', trigger: 'change' }
+          { message: '请选择病人', trigger: 'change' }
         ],
         // totalArea: [
         //   { validator: checkArea, trigger: 'blur' }

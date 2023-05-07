@@ -146,7 +146,7 @@ export const asyncRoutes = [
         component: () => import('@/views/insuranceCover/add/index'),
         meta: {
           roles: ['admin','insurance'],
-          title: '新增保险报销',
+          title: '新增报销',
           icon: 'addRealestate'
         }
       },
@@ -156,7 +156,7 @@ export const asyncRoutes = [
         component: () => import('@/views/insuranceCover/patientAdd/index'),
         meta: {
           roles: ['admin','patient'],
-          title: '新增保险报销',
+          title: '申请报销',
           icon: 'addRealestate'
         }
       }
