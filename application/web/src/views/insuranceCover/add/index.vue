@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form ref="ruleForm" v-loading="loading" :model="ruleForm" :rules="rules" label-width="100px">
 
-      <el-form-item label="病人" prop="patient" v-if="isPatient">
+      <el-form-item label="病人" prop="patient">
         <el-select v-model="ruleForm.patient" placeholder="请选择病人" @change="selectGetPatient">
           <el-option
             v-for="item in accountList"

@@ -120,9 +120,7 @@ export const asyncRoutes = [
       title: '保险报销',
       icon: 'donating'
     },
-    children: [
-
-        {
+    children: [{
       path: 'all',
       name: 'InsuranceAll',
       component: () => import('@/views/insuranceCover/list/index'),
