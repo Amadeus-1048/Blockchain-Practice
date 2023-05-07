@@ -133,9 +133,9 @@ export const asyncRoutes = [
       }
     },
       {
-        path: 'creator',
-        name: 'InsuranceCreator',
-        component: () => import('@/views/donating/donor/index'),
+        path: 'mine',
+        name: 'InsuranceMine',
+        component: () => import('@/views/insuranceCover/mine/index'),
         meta: {
           roles: ['admin','patient'],
           title: '已发起的报销',
@@ -147,7 +147,17 @@ export const asyncRoutes = [
         name: 'Add',
         component: () => import('@/views/insuranceCover/add/index'),
         meta: {
-          roles: ['admin','insurance','patient'],
+          roles: ['admin','insurance'],
+          title: '新增保险报销',
+          icon: 'addRealestate'
+        }
+      },
+      {
+        path: 'patientAdd',
+        name: 'PatientAdd',
+        component: () => import('@/views/insuranceCover/patientAdd/index'),
+        meta: {
+          roles: ['admin','patient'],
           title: '新增保险报销',
           icon: 'addRealestate'
         }

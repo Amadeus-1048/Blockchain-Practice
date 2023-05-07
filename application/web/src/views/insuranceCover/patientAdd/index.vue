@@ -2,22 +2,8 @@
   <div class="app-container">
     <el-form ref="ruleForm" v-loading="loading" :model="ruleForm" :rules="rules" label-width="100px">
 
-      <el-form-item label="病人" prop="patient" v-if="isPatient">
-        <el-select v-model="ruleForm.patient" placeholder="请选择病人" @change="selectGetPatient">
-          <el-option
-            v-for="item in accountList"
-            :key="item.account_id"
-            :label="item.account_name"
-            :value="item.account_id"
-          >
-            <span style="float: left">{{ item.account_name }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.account_id }}</span>
-          </el-option>
-        </el-select>
-      </el-form-item>
-
       <el-form-item label="病历" prop="prescription">
-        <el-select v-model="ruleForm.prescription" placeholder="请选择病历" :disabled="!ruleForm.patient" @change="selectGetPrescriptionList">
+        <el-select v-model="ruleForm.prescription" placeholder="请选择病历" @change="selectGetPrescriptionList">
           <el-option
               v-for="item in prescriptionList"
               :key="item.id"
@@ -52,7 +38,7 @@ export default {
     return {
       isPatient: /病人/.test(this.account_name) ,
       ruleForm: {
-        patient: '',
+        patient: this.account_id,
         prescription: '',
         status: 'processing',
       },
@@ -78,10 +64,14 @@ export default {
       if (response !== null) {
         // 过滤掉管理员
         this.accountList = response.filter(item =>
-          //item.account_name !== '医生'
+            //item.account_name !== '医生'
             /病人$/.test(item.account_name)
         )
       }
+    })
+    queryPrescriptionList({'patient':this.account_id}).then(response => {
+        this.ruleForm.patient = this.account_id
+          this.prescriptionList = response
     })
   },
   methods: {
@@ -129,12 +119,7 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    selectGetPatient(account_id) {
-      this.ruleForm.patient = account_id
-      queryPrescriptionList({'patient':account_id}).then(response => {
-          this.prescriptionList = response
-      })
-    },
+
     selectGetPrescriptionList(prescription) {
       this.ruleForm.prescription = prescription
     },
