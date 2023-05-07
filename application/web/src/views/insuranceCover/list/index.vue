@@ -57,7 +57,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="createProcessing('ProcessingForm')">确 定</el-button>
+        <el-button type="primary" @click="createProcessing('ProcessForm')">确 定</el-button>
         <el-button @click="dialogCreateProcessing = false">取 消</el-button>
       </div>
     </el-dialog>
@@ -66,7 +66,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { queryInsuranceCoverList } from '@/api/insuranceCover'
+import { queryInsuranceCoverList, updateInsuranceCoverList } from '@/api/insuranceCover'
 
 export default {
   name: 'insuranceCover',
@@ -75,14 +75,9 @@ export default {
       loading: true,
       loadingDialog: false,
       insuranceCoverList: [],
+      status_en : '',
       dialogCreateProcessing: false,
-      realForm: {
-        price: 0,
-        salePeriod: 0
-      },
-      ProcessingForm: {
-        proprietor: ''
-      },
+
       rulesProcess: {
         operation: [
           { required: true, message: '请选择操作', trigger: 'change' }
@@ -91,7 +86,10 @@ export default {
       accountList: [],
       valItem: {},
       ProcessForm: {
-        operation: ''
+        operation: '',
+        insurance_cover: '',
+        insurance_id:'',
+        patient:'',
       },
       operationList: ['通过', '拒绝'],
     }
@@ -132,10 +130,16 @@ export default {
 
     createProcessing(formName) {
       this.loadingDialog = true
-      createProcessing({
-        objectOfProcessing: this.valItem.realEstateId,
-        donor: this.valItem.proprietor,
-        grantee: this.ProcessingForm.proprietor
+      if (this.ProcessForm.operation === '通过') {
+        this.status_en = 'approved'
+      } else {
+        this.status_en = 'refused'
+      }
+      updateInsuranceCoverList({
+        insurance_cover: this.valItem.id,
+        insurance_id: '6f2d121de37b',
+        patient: this.valItem.patient,
+        status: this.status_en
       }).then(response => {
         this.loadingDialog = false
         this.dialogCreateProcessing = false
@@ -161,20 +165,17 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    selectGet(account_id) {
-      this.ProcessingForm.proprietor = account_id
-    },
     selectGetOperation(operation) {
       this.ProcessForm.operation = operation
     },
     // 根据状态返回不同的颜色值
     getStatusColor(status) {
       if (status === '处理中') {
-        return 'red'; // 如果状态为 '处理中'，返回红色
+        return 'blue'; // 如果状态为 '处理中'，返回红色
       } else if (status === '已通过') {
         return 'green'; // 如果状态为 'approved'，返回绿色
       } else {
-        return 'black'; // 默认返回黑色
+        return 'red'; // 默认返回黑色
       }
     }
   }

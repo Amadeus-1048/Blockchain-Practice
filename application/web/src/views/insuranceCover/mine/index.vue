@@ -170,11 +170,11 @@ export default {
     // 根据状态返回不同的颜色值
     getStatusColor(status) {
       if (status === '处理中') {
-        return 'red'; // 如果状态为 '处理中'，返回红色
+        return 'blue'; // 如果状态为 '处理中'，返回红色
       } else if (status === '已通过') {
         return 'green'; // 如果状态为 'approved'，返回绿色
       } else {
-        return 'black'; // 默认返回黑色
+        return 'red'; // 默认返回黑色
       }
     }
   }

@@ -17,3 +17,12 @@ export function queryInsuranceCoverList(data) {
         data
     })
 }
+
+// 更新报销记录
+export function updateInsuranceCoverList(data) {
+    return request({
+        url: '/updateInsuranceCover',
+        method: 'post',
+        data
+    })
+}

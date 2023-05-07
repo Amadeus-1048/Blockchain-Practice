@@ -60,7 +60,7 @@ export default {
       if (this.value) {
         this.loading = true
         this.$store.dispatch('account/login', this.value).then(() => {
-          this.$router.push({ path: this.redirect || '/' })
+          this.$router.push({ path: '/' })
           this.loading = false
         }).catch(() => {
           this.loading = false
