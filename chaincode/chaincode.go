@@ -101,6 +101,10 @@ func (t *BlockChainMedicalInfoManageSystem) Invoke(stub shim.ChaincodeStubInterf
 		return api.CreateInsuranceCover(stub, args)
 	case "queryInsuranceCover":
 		return api.QueryInsuranceCover(stub, args)
+	case "updateInsuranceCover":
+		return api.UpdateInsuranceCover(stub, args)
+	case "deleteInsuranceCover":
+		return api.DeleteInsuranceCover(stub, args)
 	case "createDrugOrder":
 		return api.CreateDrugOrder(stub, args)
 	case "queryDrugOrder":

@@ -185,7 +185,7 @@ var InsuranceStatusConstant = func() map[string]string {
 		"processing": "处理中", // 患者发起保险报销申请，等待保险公司确认报销
 		"cancelled":  "已取消", // 患者在保险公司确认报销之前取消保险报销申请
 		"refused":    "已拒绝", // 保险公司拒绝确认报销
-		"done":       "完成",  // 保险公司确认报销，保险报销完成
+		"approved":   "已通过", // 保险公司确认报销，保险报销完成
 	}
 }
 

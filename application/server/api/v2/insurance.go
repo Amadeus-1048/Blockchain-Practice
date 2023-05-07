@@ -17,7 +17,15 @@ type InsuranceCoverRequestBody struct {
 }
 
 type InsuranceCoverQueryRequestBody struct {
-	Patient string `json:"patient"` // 患者Id
+	Patient        string `json:"patient"`         // 患者Id
+	InsuranceCover string `json:"insurance_cover"` // 报销订单ID
+}
+
+type UpdateInsuranceCoverRequestBody struct {
+	InsuranceCover string `json:"insurance_cover"` // 报销订单ID
+	Patient        string `json:"patient"`         // 病人ID
+	InsuranceID    string `json:"insurance_id"`    // 保险机构ID
+	Status         string `json:"status"`          // 订单状态
 }
 
 func CreateInsuranceCover(c *gin.Context) {
@@ -65,6 +73,9 @@ func QueryInsuranceCoverList(c *gin.Context) {
 	if body.Patient != "" {
 		bodyBytes = append(bodyBytes, []byte(body.Patient))
 	}
+	if body.InsuranceCover != "" {
+		bodyBytes = append(bodyBytes, []byte(body.InsuranceCover))
+	}
 	//调用智能合约
 	resp, err := bc.ChannelQuery("queryInsuranceCover", bodyBytes)
 	if err != nil {
@@ -73,6 +84,64 @@ func QueryInsuranceCoverList(c *gin.Context) {
 	}
 	// 反序列化json
 	var data []map[string]interface{}
+	if err = json.Unmarshal(bytes.NewBuffer(resp.Payload).Bytes(), &data); err != nil {
+		appG.Response(http.StatusInternalServerError, "失败", err.Error())
+		return
+	}
+	appG.Response(http.StatusOK, "成功", data)
+}
+
+func UpdateInsuranceCover(c *gin.Context) {
+	appG := app.Gin{C: c}
+	body := new(UpdateInsuranceCoverRequestBody)
+	//解析Body参数
+	if err := c.ShouldBind(body); err != nil {
+		appG.Response(http.StatusBadRequest, "失败", fmt.Sprintf("参数出错%s", err.Error()))
+		return
+	}
+	var bodyBytes [][]byte
+	bodyBytes = append(bodyBytes, []byte(body.InsuranceCover))
+	bodyBytes = append(bodyBytes, []byte(body.InsuranceID))
+	bodyBytes = append(bodyBytes, []byte(body.Status))
+	bodyBytes = append(bodyBytes, []byte(body.Patient))
+
+	//调用智能合约
+	resp, err := bc.ChannelExecute("updateInsuranceCover", bodyBytes)
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, "失败", err.Error())
+		return
+	}
+	// 反序列化json
+	var data map[string]interface{}
+	if err = json.Unmarshal(bytes.NewBuffer(resp.Payload).Bytes(), &data); err != nil {
+		appG.Response(http.StatusInternalServerError, "失败", err.Error())
+		return
+	}
+	appG.Response(http.StatusOK, "成功", data)
+}
+
+func DeleteInsuranceCover(c *gin.Context) {
+	appG := app.Gin{C: c}
+	body := new(UpdateInsuranceCoverRequestBody)
+	//解析Body参数
+	if err := c.ShouldBind(body); err != nil {
+		appG.Response(http.StatusBadRequest, "失败", fmt.Sprintf("参数出错%s", err.Error()))
+		return
+	}
+	var bodyBytes [][]byte
+	bodyBytes = append(bodyBytes, []byte(body.InsuranceCover))
+	bodyBytes = append(bodyBytes, []byte(body.InsuranceID))
+	bodyBytes = append(bodyBytes, []byte(body.Status))
+	bodyBytes = append(bodyBytes, []byte(body.Patient))
+
+	//调用智能合约
+	resp, err := bc.ChannelExecute("deleteInsuranceCover", bodyBytes)
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, "失败", err.Error())
+		return
+	}
+	// 反序列化json
+	var data map[string]interface{}
 	if err = json.Unmarshal(bytes.NewBuffer(resp.Payload).Bytes(), &data); err != nil {
 		appG.Response(http.StatusInternalServerError, "失败", err.Error())
 		return

@@ -47,6 +47,8 @@ func InitRouter() *gin.Engine {
 		apiV2.POST("/queryPrescription", v2.QueryPrescriptionList)
 		apiV2.POST("/createInsuranceCover", v2.CreateInsuranceCover)
 		apiV2.POST("/queryInsuranceCoverList", v2.QueryInsuranceCoverList)
+		apiV2.POST("/updateInsuranceCover", v2.UpdateInsuranceCover)
+		apiV2.POST("/deleteInsuranceCover", v2.DeleteInsuranceCover)
 		apiV2.POST("/createDrugOrder", v2.CreateDrugOrder)
 		apiV2.POST("/queryDrugOrderList", v2.QueryDrugOrderList)
 	}

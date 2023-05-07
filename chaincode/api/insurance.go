@@ -15,9 +15,9 @@ func CreateInsuranceCover(stub shim.ChaincodeStubInterface, args []string) pb.Re
 	if len(args) != 3 {
 		return shim.Error("参数个数不满足")
 	}
-	prescriptionID := args[0] // 处方id
-	patientID := args[1]      // 患者id
-	status := args[2]         // 订单状态
+	prescriptionID := args[0]                          // 处方id
+	patientID := args[1]                               // 患者id
+	status := model.InsuranceStatusConstant()[args[2]] // 订单状态
 
 	if prescriptionID == "" || patientID == "" || status == "" {
 		return shim.Error("参数存在空值")
@@ -33,7 +33,7 @@ func CreateInsuranceCover(stub shim.ChaincodeStubInterface, args []string) pb.Re
 		ID:           stub.GetTxID()[:16],
 		Prescription: prescriptionID,
 		Patient:      patientID,
-		Status:       "处理中",
+		Status:       status,
 	}
 
 	// 写入账本
@@ -71,4 +71,97 @@ func QueryInsuranceCover(stub shim.ChaincodeStubInterface, args []string) pb.Res
 		return shim.Error(fmt.Sprintf("QueryInsuranceCover-序列化出错: %s", err))
 	}
 	return shim.Success(insuranceCoverByte)
+}
+
+// UpdateInsuranceCover 更新保险报销订单
+func UpdateInsuranceCover(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	// 验证参数
+	if len(args) != 4 {
+		return shim.Error("参数个数不满足")
+	}
+	insuranceCoverID := args[0] // 保险报销订单id
+	insuranceID := args[1]      // 保险机构id
+	status := args[2]           // 订单状态
+	patient := args[3]          // 病人
+
+	if insuranceCoverID == "" || status == "" {
+		return shim.Error("参数存在空值")
+	}
+
+	// 判断是否为保险机构操作
+	resultsAccount, err := utils.GetStateByPartialCompositeKeys(stub, model.AccountV2Key, []string{insuranceID})
+	if err != nil || len(resultsAccount) != 1 {
+		return shim.Error(fmt.Sprintf("操作人权限验证失败%s", err))
+	}
+
+	// 查找该条报销记录
+	var insuranceCover model.InsuranceCover
+	results, err := utils.GetStateByPartialCompositeKeys2(stub, model.InsuranceKey, []string{patient, insuranceCoverID})
+	if err != nil {
+		return shim.Error(fmt.Sprintf("%s", err))
+	}
+	if err = json.Unmarshal(results[0], &insuranceCover); err != nil {
+		return shim.Error(fmt.Sprintf("UpdateSellingBySeller-反序列化出错: %s", err))
+	}
+
+	////清除原来的报销信息
+	//if err := utils.DelLedger(stub, model.InsuranceKey, []string{insuranceCover.Patient, insuranceCover.ID}); err != nil {
+	//	return shim.Error(fmt.Sprintf("%s", err))
+	//}
+
+	// 修改状态
+	insuranceCover.Status = model.InsuranceStatusConstant()[status]
+
+	// 写入账本
+	if err := utils.WriteLedger(insuranceCover, stub, model.InsuranceKey, []string{insuranceCover.Patient, insuranceCover.ID}); err != nil {
+		return shim.Error(fmt.Sprintf("%s", err))
+	}
+
+	//将成功创建的信息返回
+	recordByte, err := json.Marshal(insuranceCover)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("序列化成功创建的信息出错: %s", err))
+	}
+	// 成功返回
+	return shim.Success(recordByte)
+}
+
+// DeleteInsuranceCover 更新保险报销订单
+func DeleteInsuranceCover(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	// 验证参数
+	if len(args) != 4 {
+		return shim.Error("参数个数不满足")
+	}
+	insuranceCoverID := args[0] // 保险报销订单id
+	insuranceID := args[1]      // 保险机构id
+	status := args[2]           // 订单状态
+	patient := args[3]          // 病人
+	_ = stub.GetTxID()[:16]
+	if insuranceCoverID == "" || status == "" {
+		return shim.Error("参数存在空值")
+	}
+
+	// 判断是否为保险机构操作
+	resultsAccount, err := utils.GetStateByPartialCompositeKeys(stub, model.AccountV2Key, []string{insuranceID})
+	if err != nil || len(resultsAccount) != 1 {
+		return shim.Error(fmt.Sprintf("操作人权限验证失败%s", err))
+	}
+
+	// 查找该条报销记录
+	var insuranceCover model.InsuranceCover
+	results, err := utils.GetStateByPartialCompositeKeys2(stub, model.InsuranceKey, []string{patient, insuranceCoverID})
+	if err != nil {
+		return shim.Error(fmt.Sprintf("%s", err))
+	}
+	if err = json.Unmarshal(results[0], &insuranceCover); err != nil {
+		return shim.Error(fmt.Sprintf("DeleteInsuranceCover-反序列化出错: %s", err))
+	}
+
+	//清除原来的报销信息
+	if err := utils.DelLedger(stub, model.InsuranceKey, []string{insuranceCover.Patient, insuranceCover.ID}); err != nil {
+		return shim.Error(fmt.Sprintf("%s", err))
+	}
+
+	// 成功返回
+	return shim.Success(results[0])
 }
