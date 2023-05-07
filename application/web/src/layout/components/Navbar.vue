@@ -19,7 +19,7 @@
           </el-dropdown-item>
 
           <a target="_blank" href="https://github.com/Amadeus-1048/Blockchain-Practice">
-            <el-dropdown-item>打开项目地址</el-dropdown-item>
+            <el-dropdown-item>项目 Github 地址</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">切换账户</span>
@@ -43,9 +43,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'accountId',
-      'userName',
-      'balance'
+      'account_id',
+      'account_name'
     ])
   },
   methods: {

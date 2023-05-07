@@ -23,29 +23,29 @@
 
           <div class="item">
             <el-tag>病历ID: </el-tag>
-            <span>{{ val.id }}</span>
+            <span style="margin-left: 5px;">{{ val.id }}</span>
           </div>
           <div class="item">
             <el-tag type="success">病人ID: </el-tag>
-            <span>{{ val.patient }}</span>
+            <span style="margin-left: 5px;">{{ val.patient }}</span>
           </div>
           <div class="item">
             <el-tag type="warning">医生: </el-tag>
-            <span>{{ val.doctor }}</span>
+            <span style="margin-left: 5px;">{{ val.doctor }}</span>
           </div>
           <div class="item">
             <el-tag type="danger">诊断: </el-tag>
-            <span>{{ val.diagnosis }}</span>
+            <span style="margin-left: 5px;">{{ val.diagnosis }}</span>
           </div>
           <div class="item">
             <el-tag type="danger">药品: </el-tag>
-            <span>
+            <span style="margin-left: 5px;">
     <span v-for="(drug, index) in val.drug" :key="index">{{ drug.Name }} {{drug.amount}}份 <br v-if="index !== val.drug.length - 1"></span>
   </span>
           </div>
           <div class="item">
             <el-tag type="danger">备注: </el-tag>
-            <span>{{ val.comment }}</span>
+            <span style="margin-left: 5px;">{{ val.comment }}</span>
           </div>
 
           <div v-if="!val.encumbrance&&roles[0] !== 'doctor'">

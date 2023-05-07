@@ -23,15 +23,15 @@
 
           <div class="item">
             <el-tag>报销记录ID: </el-tag>
-            <span>{{ val.id }}</span>
+            <span style="margin-left: 5px;">{{ val.id }}</span>
           </div>
           <div class="item">
             <el-tag type="success">病历ID: </el-tag>
-            <span>{{ val.prescription }}</span>
+            <span style="margin-left: 5px;">{{ val.prescription }}</span>
           </div>
           <div class="item">
             <el-tag type="warning">病人ID: </el-tag>
-            <span>{{ val.patient }}</span>
+            <span style="margin-left: 5px;">{{ val.patient }}</span>
           </div>
           <div v-if="val.status==='处理中'&&(roles[0] === 'admin' || roles[0] === 'insurance')" style="display: flex; justify-content: center; align-items: center;" >
             <el-button type="text" @click="openProcessingDialog(val)">处 理</el-button>
