@@ -47,6 +47,10 @@
             <el-tag type="danger">备注: </el-tag>
             <span style="margin-left: 5px;">{{ val.comment }}</span>
           </div>
+          <div class="item">
+            <el-tag type="info">创建时间: </el-tag>
+            <span style="margin-left: 5px;">{{ val.created }}</span>
+          </div>
         </el-card>
       </el-col>
     </el-row>
@@ -137,7 +141,7 @@ export default {
 
 .prescription-card {
   width: 280px;
-  height: 390px;
+  height: 430px;
   margin: 18px;
 }
 </style>

@@ -33,6 +33,10 @@
             <el-tag type="warning">病人ID: </el-tag>
             <span style="margin-left: 5px;">{{ val.patient }}</span>
           </div>
+          <div class="item">
+            <el-tag type="info">创建时间: </el-tag>
+            <span style="margin-left: 5px;">{{ val.created }}</span>
+          </div>
           <div v-if="val.status==='处理中'&&(roles[0] === 'admin' || roles[0] === 'insurance')" style="display: flex; justify-content: center; align-items: center;" >
             <el-button type="text" @click="openProcessingDialog(val)">处 理</el-button>
           </div>
@@ -210,7 +214,7 @@ export default {
 
   .insuranceCover-card {
     width: 280px;
-    height: 300px;
+    height: 340px;
     margin: 18px;
   }
 </style>

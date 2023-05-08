@@ -37,7 +37,10 @@
             <el-tag type="warning">药品数量: </el-tag>
             <span style="margin-left: 5px;">{{ val.amount }} 份</span>
           </div>
-
+          <div class="item">
+            <el-tag type="info">创建时间: </el-tag>
+            <span style="margin-left: 5px;">{{ val.created }}</span>
+          </div>
         </el-card>
       </el-col>
     </el-row>
@@ -121,7 +124,7 @@ export default {
 
   .drugOrder-card {
     width: 280px;
-    height: 280px;
+    height: 330px;
     margin: 18px;
   }
 </style>
