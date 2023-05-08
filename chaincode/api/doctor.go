@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
@@ -66,6 +67,7 @@ func CreatePrescription(stub shim.ChaincodeStubInterface, args []string) pb.Resp
 		Drug:      drugs,
 		Doctor:    doctorID,
 		Hospital:  hospitalID,
+		Created:   time.Now().Format("2006-01-02 15:04:05"),
 		Comment:   comment,
 	}
 	// 写入账本

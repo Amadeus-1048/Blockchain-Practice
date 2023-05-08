@@ -131,6 +131,7 @@ type Prescription struct {
 	Drug      []Drug `json:"drug"`      // 药品列表及用量
 	Doctor    string `json:"doctor"`    // 开方医师 AccountV2Id
 	Hospital  string `json:"hospital"`  // 医院 ID
+	Created   string `json:"created"`   // 创建时间
 	Comment   string `json:"comment"`   // 备注
 }
 
@@ -157,6 +158,7 @@ type DrugOrder struct {
 	Prescription string `json:"prescription"` // 处方ID
 	Patient      string `json:"patient"`      // 患者ID
 	DrugStore    string `json:"drug_store"`   // 药店id
+	Created      string `json:"created"`      // 创建时间
 }
 
 // DrugStore 药店
@@ -177,6 +179,7 @@ type InsuranceCover struct {
 	Prescription string `json:"prescription"` // 处方ID
 	Patient      string `json:"patient"`      // 患者ID
 	Status       string `json:"status"`       // 订单状态
+	Created      string `json:"created"`      // 创建时间
 }
 
 // InsuranceStatusConstant 保险状态

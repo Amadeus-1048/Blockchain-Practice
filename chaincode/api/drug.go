@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
+	"time"
 )
 
 // CreateDrugOrder 创建药品订单
@@ -38,6 +39,7 @@ func CreateDrugOrder(stub shim.ChaincodeStubInterface, args []string) pb.Respons
 		Prescription: prescriptionID,
 		Patient:      patientID,
 		DrugStore:    DrugStoreID,
+		Created:      time.Now().Format("2006-01-02 15:04:05"),
 	}
 
 	// 写入账本

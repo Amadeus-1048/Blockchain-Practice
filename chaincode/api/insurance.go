@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
+	"time"
 )
 
 // CreateInsuranceCover 创建保险报销订单
@@ -34,6 +35,7 @@ func CreateInsuranceCover(stub shim.ChaincodeStubInterface, args []string) pb.Re
 		Prescription: prescriptionID,
 		Patient:      patientID,
 		Status:       status,
+		Created:      time.Now().Format("2006-01-02 15:04:05"),
 	}
 
 	// 写入账本
@@ -104,11 +106,6 @@ func UpdateInsuranceCover(stub shim.ChaincodeStubInterface, args []string) pb.Re
 		return shim.Error(fmt.Sprintf("UpdateSellingBySeller-反序列化出错: %s", err))
 	}
 
-	////清除原来的报销信息
-	//if err := utils.DelLedger(stub, model.InsuranceKey, []string{insuranceCover.Patient, insuranceCover.ID}); err != nil {
-	//	return shim.Error(fmt.Sprintf("%s", err))
-	//}
-
 	// 修改状态
 	insuranceCover.Status = model.InsuranceStatusConstant()[status]
 
@@ -136,7 +133,7 @@ func DeleteInsuranceCover(stub shim.ChaincodeStubInterface, args []string) pb.Re
 	insuranceID := args[1]      // 保险机构id
 	status := args[2]           // 订单状态
 	patient := args[3]          // 病人
-	_ = stub.GetTxID()[:16]
+
 	if insuranceCoverID == "" || status == "" {
 		return shim.Error("参数存在空值")
 	}
