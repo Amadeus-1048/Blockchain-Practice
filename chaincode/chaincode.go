@@ -55,6 +55,8 @@ func (t *BlockChainMedicalInfoManageSystem) Init(stub shim.ChaincodeStubInterfac
 		}
 	}
 
+	api.CreateAccountV2(stub, []string{"四号病人", "0feceb66ffc1"})
+
 	return shim.Success(nil)
 }
 
@@ -91,6 +93,8 @@ func (t *BlockChainMedicalInfoManageSystem) Invoke(stub shim.ChaincodeStubInterf
 	case "updateDonating":
 		return api.UpdateDonating(stub, args)
 	// api v2
+	case "createAccountV2":
+		return api.CreateAccountV2(stub, args)
 	case "queryAccountV2List":
 		return api.QueryAccountV2List(stub, args)
 	case "createPrescription":

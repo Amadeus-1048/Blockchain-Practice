@@ -29,6 +29,7 @@ func InitRouter() *gin.Engine {
 	apiV2 := r.Group("/api/v2")
 	{
 		apiV2.GET("/hello", v2.Hello)
+		apiV2.POST("/createAccountV2", v2.CreateAccountV2)
 		apiV2.POST("/queryAccountV2List", v2.QueryAccountV2List)
 		apiV2.POST("/createPrescription", v2.CreatePrescription)
 		apiV2.POST("/queryPrescription", v2.QueryPrescriptionList)

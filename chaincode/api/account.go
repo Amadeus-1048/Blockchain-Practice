@@ -5,7 +5,6 @@ import (
 	"chaincode/pkg/utils"
 	"encoding/json"
 	"fmt"
-
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
 )
@@ -66,4 +65,47 @@ func QueryAccountV2List(stub shim.ChaincodeStubInterface, args []string) pb.Resp
 		return shim.Error(fmt.Sprintf("QueryAccountList-序列化出错: %s", err))
 	}
 	return shim.Success(accountListByte)
+}
+
+// CreateAccountV2 创建角色
+func CreateAccountV2(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	// 验证参数
+	if len(args) != 2 {
+		return shim.Error("参数个数不满足")
+	}
+	userName := args[0] // 用户名
+	operator := args[1] // 操作人ID
+
+	if operator == "" || userName == "" {
+		return shim.Error("参数存在空值")
+	}
+
+	// 判断是否为管理员操作
+	resultsAccount, err := utils.GetStateByPartialCompositeKeys(stub, model.AccountV2Key, []string{operator})
+	if err != nil || len(resultsAccount) != 1 {
+		return shim.Error(fmt.Sprintf("操作人权限验证失败%s", err))
+	}
+	var account model.AccountV2
+	if err = json.Unmarshal(resultsAccount[0], &account); err != nil {
+		return shim.Error(fmt.Sprintf("查询操作人信息-反序列化出错: %s", err))
+	}
+	if account.AccountName != "管理员" {
+		return shim.Error(fmt.Sprintf("操作人权限不足%s", err))
+	}
+
+	newAccount := &model.AccountV2{
+		AccountId:   stub.GetTxID()[:12],
+		AccountName: userName,
+	}
+	// 写入账本
+	if err := utils.WriteLedger(newAccount, stub, model.AccountV2Key, []string{newAccount.AccountId}); err != nil {
+		return shim.Error(fmt.Sprintf("%s", err))
+	}
+	//将成功创建的信息返回
+	prescriptionByte, err := json.Marshal(newAccount)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("序列化成功创建的信息出错: %s", err))
+	}
+	// 成功返回
+	return shim.Success(prescriptionByte)
 }
