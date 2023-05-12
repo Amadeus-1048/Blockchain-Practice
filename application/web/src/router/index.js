@@ -65,6 +65,42 @@ export const constantRoutes = [{
  */
 export const asyncRoutes = [
   {
+    path: '/account',
+    component: Layout,
+    redirect: '/account/all',
+    name: 'Account',
+    alwaysShow: true,
+    meta: {
+      roles: ['admin'],
+      title: '账户',
+      icon: 'donating'
+    },
+    children: [
+      {
+        path: 'all',
+        name: 'AccountAll',
+        component: () => import('@/views/Account/list/index'),
+        meta: {
+          roles: ['admin'],
+          title: '所有账户',
+          icon: 'donatingAll'
+        }
+      },
+
+      {
+        path: 'add',
+        name: 'Add',
+        component: () => import('@/views/Account/add/index'),
+        meta: {
+          roles: ['admin'],
+          title: '新增账户',
+          icon: 'addRealestate'
+        }
+      }
+    ]
+  },
+
+  {
     path: '/prescription',
     component: Layout,
     redirect: '/prescription/all',

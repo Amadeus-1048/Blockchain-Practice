@@ -16,3 +16,11 @@ export function login(data) {
         data
     })
 }
+
+// 创建角色
+export function createAccount() {
+    return request({
+        url: '/createAccountV2',
+        method: 'post'
+    })
+}
