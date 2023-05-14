@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="ruleForm" v-loading="loading" :model="ruleForm" :rules="rules" label-width="100px">
+    <el-form ref="ruleForm" v-loading="loading" :model="ruleForm" label-width="100px">
 
       <el-form-item label="用户名" prop="account_name">
         <el-input v-model="ruleForm.account_name" style="width: 197px"/>
@@ -45,8 +45,8 @@ export default {
           }).then(() => {
             this.loading = true
             createAccount({
-              account_name: this.ruleForm.account_name,
               operator: this.account_id,
+              account_name: this.ruleForm.account_name,
             }).then(response => {
               this.loading = false
               if (response !== null) {
@@ -77,9 +77,6 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
-    },
-    selectGet(account_id) {
-      this.ruleForm.patient = account_id
     },
   }
 }

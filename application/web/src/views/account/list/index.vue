@@ -36,7 +36,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import { queryAccountList } from '@/api/accountV2'
-import { queryPrescriptionList } from '@/api/prescription'
 
 export default {
   name: 'Account',
@@ -97,7 +96,7 @@ export default {
 
   .prescription-card {
     width: 280px;
-    height: 280px;
+    height: 150px;
     margin: 18px;
   }
 </style>

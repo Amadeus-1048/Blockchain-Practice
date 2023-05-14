@@ -18,9 +18,10 @@ export function login(data) {
 }
 
 // 创建角色
-export function createAccount() {
+export function createAccount(data) {
     return request({
         url: '/createAccountV2',
-        method: 'post'
+        method: 'post',
+        data
     })
 }

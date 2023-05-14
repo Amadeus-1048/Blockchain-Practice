@@ -79,7 +79,7 @@ export const asyncRoutes = [
       {
         path: 'all',
         name: 'AccountAll',
-        component: () => import('@/views/Account/list/index'),
+        component: () => import('@/views/account/list/index'),
         meta: {
           roles: ['admin'],
           title: '所有账户',
@@ -90,7 +90,7 @@ export const asyncRoutes = [
       {
         path: 'add',
         name: 'Add',
-        component: () => import('@/views/Account/add/index'),
+        component: () => import('@/views/account/add/index'),
         meta: {
           roles: ['admin'],
           title: '新增账户',
