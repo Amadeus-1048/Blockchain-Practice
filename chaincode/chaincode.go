@@ -18,28 +18,6 @@ type BlockChainMedicalInfoManageSystem struct {
 func (t *BlockChainMedicalInfoManageSystem) Init(stub shim.ChaincodeStubInterface) pb.Response { // stub 是智能合约中的一个对象，用于与区块链网络进行交互
 	fmt.Println("链码初始化")
 	//初始化默认数据
-	var accountIds = [6]string{
-		"5feceb66ffc8",
-		"6b86b273ff34",
-		"d4735e3a265e",
-		"4e07408562be",
-		"4b227777d4dd",
-		"ef2d127de37b",
-	}
-	var userNames = [6]string{"管理员", "①号业主", "②号业主", "③号业主", "④号业主", "⑤号业主"}
-	var balances = [6]float64{0, 5000000, 5000000, 5000000, 5000000, 5000000}
-	//初始化账号数据
-	for i, val := range accountIds {
-		account := &model.Account{
-			AccountId: val,
-			UserName:  userNames[i],
-			Balance:   balances[i],
-		}
-		// 写入账本
-		if err := utils.WriteLedger(account, stub, model.AccountKey, []string{val}); err != nil {
-			return shim.Error(fmt.Sprintf("%s", err))
-		}
-	}
 
 	var accountV2Ids = [7]string{"0feceb66ffc1", "1feceb66ffc1", "2b86b273ff31", "34735e3a261e", "4e17408561be", "5b227771d4dd", "6f2d121de37b"}
 	var userNameV2s = [7]string{"管理员", "医生", "①号病人", "②号病人", "③号病人", "药店", "保险机构"}
@@ -68,30 +46,6 @@ func (t *BlockChainMedicalInfoManageSystem) Invoke(stub shim.ChaincodeStubInterf
 	switch funcName {
 	case "hello":
 		return api.Hello(stub, args)
-	case "queryAccountList":
-		return api.QueryAccountList(stub, args)
-	case "createRealEstate":
-		return api.CreateRealEstate(stub, args)
-	case "queryRealEstateList":
-		return api.QueryRealEstateList(stub, args)
-	case "createSelling":
-		return api.CreateSelling(stub, args)
-	case "createSellingByBuy":
-		return api.CreateSellingByBuy(stub, args)
-	case "querySellingList":
-		return api.QuerySellingList(stub, args)
-	case "querySellingListByBuyer":
-		return api.QuerySellingListByBuyer(stub, args)
-	case "updateSelling":
-		return api.UpdateSelling(stub, args)
-	case "createDonating":
-		return api.CreateDonating(stub, args)
-	case "queryDonatingList":
-		return api.QueryDonatingList(stub, args)
-	case "queryDonatingListByGrantee":
-		return api.QueryDonatingListByGrantee(stub, args)
-	case "updateDonating":
-		return api.UpdateDonating(stub, args)
 	// api v2
 	case "createAccountV2":
 		return api.CreateAccountV2(stub, args)
