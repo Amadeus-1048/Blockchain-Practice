@@ -2,6 +2,7 @@ package v2
 
 import (
 	bc "application/blockchain"
+	"application/model"
 	"application/pkg/app"
 	"bytes"
 	"encoding/json"
@@ -10,27 +11,9 @@ import (
 	"net/http"
 )
 
-type InsuranceCoverRequestBody struct {
-	Prescription string `json:"prescription"` // 处方ID
-	Patient      string `json:"patient"`      // 患者Id
-	Status       string `json:"status"`       // 订单状态
-}
-
-type InsuranceCoverQueryRequestBody struct {
-	Patient        string `json:"patient"`         // 患者Id
-	InsuranceCover string `json:"insurance_cover"` // 报销订单ID
-}
-
-type UpdateInsuranceCoverRequestBody struct {
-	InsuranceCover string `json:"insurance_cover"` // 报销订单ID
-	Patient        string `json:"patient"`         // 病人ID
-	InsuranceID    string `json:"insurance_id"`    // 保险机构ID
-	Status         string `json:"status"`          // 订单状态
-}
-
 func CreateInsuranceCover(c *gin.Context) {
 	appG := app.Gin{C: c}
-	body := new(InsuranceCoverRequestBody)
+	body := new(model.InsuranceCoverRequestBody)
 
 	//解析Body参数
 	if err := c.ShouldBind(body); err != nil {
@@ -63,7 +46,7 @@ func CreateInsuranceCover(c *gin.Context) {
 
 func QueryInsuranceCoverList(c *gin.Context) {
 	appG := app.Gin{C: c}
-	body := new(InsuranceCoverQueryRequestBody)
+	body := new(model.InsuranceCoverQueryRequestBody)
 	//解析Body参数
 	if err := c.ShouldBind(body); err != nil {
 		appG.Response(http.StatusBadRequest, "失败", fmt.Sprintf("参数出错%s", err.Error()))
@@ -93,7 +76,7 @@ func QueryInsuranceCoverList(c *gin.Context) {
 
 func UpdateInsuranceCover(c *gin.Context) {
 	appG := app.Gin{C: c}
-	body := new(UpdateInsuranceCoverRequestBody)
+	body := new(model.UpdateInsuranceCoverRequestBody)
 	//解析Body参数
 	if err := c.ShouldBind(body); err != nil {
 		appG.Response(http.StatusBadRequest, "失败", fmt.Sprintf("参数出错%s", err.Error()))
@@ -122,7 +105,7 @@ func UpdateInsuranceCover(c *gin.Context) {
 
 func DeleteInsuranceCover(c *gin.Context) {
 	appG := app.Gin{C: c}
-	body := new(UpdateInsuranceCoverRequestBody)
+	body := new(model.UpdateInsuranceCoverRequestBody)
 	//解析Body参数
 	if err := c.ShouldBind(body); err != nil {
 		appG.Response(http.StatusBadRequest, "失败", fmt.Sprintf("参数出错%s", err.Error()))

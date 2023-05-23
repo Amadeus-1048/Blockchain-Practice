@@ -2,6 +2,7 @@ package v2
 
 import (
 	bc "application/blockchain"
+	"application/model"
 	"application/pkg/app"
 	"bytes"
 	"encoding/json"
@@ -10,22 +11,9 @@ import (
 	"net/http"
 )
 
-type AccountIdBody struct {
-	AccountId string `json:"account_id"`
-}
-
-type AccountRequestBody struct {
-	Args []AccountIdBody `json:"args"`
-}
-
-type CreateAccountBody struct {
-	AccountName string `json:"account_name"`
-	Operator    string `json:"operator"`
-}
-
 func QueryAccountV2List(c *gin.Context) {
 	appG := app.Gin{C: c}
-	body := new(AccountRequestBody)
+	body := new(model.AccountRequestBody)
 	//解析Body参数
 	if err := c.ShouldBind(body); err != nil {
 		appG.Response(http.StatusBadRequest, "失败", fmt.Sprintf("参数出错%s", err.Error()))
@@ -52,7 +40,7 @@ func QueryAccountV2List(c *gin.Context) {
 
 func CreateAccountV2(c *gin.Context) {
 	appG := app.Gin{C: c}
-	body := new(CreateAccountBody)
+	body := new(model.CreateAccountBody)
 
 	//解析Body参数
 	if err := c.ShouldBind(body); err != nil {

@@ -2,6 +2,7 @@ package v2
 
 import (
 	bc "application/blockchain"
+	"application/model"
 	"application/pkg/app"
 	"bytes"
 	"encoding/json"
@@ -10,23 +11,9 @@ import (
 	"net/http"
 )
 
-type DrugOrderRequestBody struct {
-	//Drug      []Drug `json:"drug"`      // 药品列表及用量
-	DrugName     string `json:"drug_name"`    // 药品名
-	DrugAmount   string `json:"drug_amount"`  // 药品用量
-	Prescription string `json:"prescription"` // 处方ID
-	Patient      string `json:"patient"`      // 患者Id
-	DrugStore    string `json:"drug_store"`   // 药店Id
-}
-
-type DrugOrderQueryRequestBody struct {
-	Patient   string `json:"patient"` // 患者AccountId
-	DrugStore string `json:"drug_store"`
-}
-
 func CreateDrugOrder(c *gin.Context) {
 	appG := app.Gin{C: c}
-	body := new(DrugOrderRequestBody)
+	body := new(model.DrugOrderRequestBody)
 
 	//解析Body参数
 	if err := c.ShouldBind(body); err != nil {
@@ -61,7 +48,7 @@ func CreateDrugOrder(c *gin.Context) {
 
 func QueryDrugOrderList(c *gin.Context) {
 	appG := app.Gin{C: c}
-	body := new(DrugOrderQueryRequestBody)
+	body := new(model.DrugOrderQueryRequestBody)
 	//解析Body参数
 	if err := c.ShouldBind(body); err != nil {
 		appG.Response(http.StatusBadRequest, "失败", fmt.Sprintf("参数出错%s", err.Error()))
