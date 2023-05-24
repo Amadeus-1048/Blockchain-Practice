@@ -33,8 +33,6 @@ func (t *BlockChainMedicalInfoManageSystem) Init(stub shim.ChaincodeStubInterfac
 		}
 	}
 
-	api.CreateAccountV2(stub, []string{"四号病人", "0feceb66ffc1"})
-
 	return shim.Success(nil)
 }
 
