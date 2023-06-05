@@ -117,8 +117,3 @@ cd fabric-samples/test-network
 [官方手册](https://hyperledger-fabric.readthedocs.io/zh_CN/latest/test_network.html)
 
 
-
-# 实践
-
-有报错，待检查
-
